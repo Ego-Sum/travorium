@@ -1,0 +1,2069 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Travorium — Premium Travel Web Deck v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#07182d;--ink-soft:#35455d;--muted:#6b7b8f;--blue:#1479d4;--blue-deep:#0b4e91;--cyan:#22c4d8;--sky:#e7f8ff;--white:#fff;--line:rgba(7,24,45,.10);--glass:rgba(255,255,255,.78);--glass-strong:rgba(255,255,255,.9);--shadow:0 28px 80px rgba(7,24,45,.16);--radius-frame:30px;--radius-card:26px;--ease:cubic-bezier(.19,1,.22,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+body{font-family:"Manrope",system-ui,sans-serif;color:var(--ink);background:radial-gradient(circle at 16% 8%,rgba(34,196,216,.20),transparent 32%),radial-gradient(circle at 88% 80%,rgba(20,121,212,.15),transparent 34%),linear-gradient(135deg,#f8fdff 0%,#e4f4f8 45%,#edf5f7 100%);display:flex;align-items:center;justify-content:center}
+.ambient-orb{position:fixed;border-radius:999px;filter:blur(44px);opacity:.32;pointer-events:none;animation:floatOrb 13s ease-in-out infinite alternate}
+.ambient-orb.one{width:260px;height:260px;left:-72px;top:18%;background:#68d4e8}
+.ambient-orb.two{width:330px;height:330px;right:-110px;bottom:7%;background:#bfefff;animation-delay:-4s}
+@keyframes floatOrb{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(28px,-20px,0) scale(1.07)}}
+.deck-shell{position:relative;width:94vw;max-width:1640px;display:flex;flex-direction:column;align-items:center;gap:clamp(10px,1.8vh,18px)}
+.presentation-frame{position:relative;width:100%;height:min(82vh,calc(100vh - 96px));min-height:0;overflow:hidden;border-radius:var(--radius-frame);background:#0d1b2a;box-shadow:var(--shadow),inset 0 0 0 1px rgba(255,255,255,.60);isolation:isolate}
+.track,.slide{position:absolute;inset:0}
+.slide{opacity:0;visibility:hidden;transform:translateY(12px) scale(.997);transition:opacity .7s ease,transform .85s var(--ease),visibility .7s ease;display:flex;overflow:hidden}
+.slide.active{opacity:1;visibility:visible;transform:translateY(0) scale(1);z-index:2}
+.slide-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;transform:scale(1.04);transition:transform 10s ease-out}
+.slide.active .slide-bg{transform:scale(1)}
+.slide-bg-overlay{position:absolute;inset:0;z-index:1}
+.slide-bg-overlay.cover{background:rgba(0,0,0,0.20)}
+.slide-bg-overlay.left-dark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 66%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0,0,0,0.63) 0%, rgba(0,0,0,0.42) 70%, transparent 100%) !important;
+    z-index: 2;
+}
+.slide-bg-overlay.bottom-dark {
+    position: absolute !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 60% !important;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 70%, transparent 100%) !important;
+    z-index: 5 !important;
+    pointer-events: none;
+}
+.slide-bg-overlay.bottom-dark-70 {
+    position: absolute !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 70% !important;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 70%, transparent 100%) !important;
+    z-index: 5 !important;
+    pointer-events: none;
+}
+.slide-bg-overlay.full-dark {
+    position: absolute !important;
+    inset: 0 !important;
+    height: 100% !important;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.4) 100%) !important;
+    z-index: 5 !important;
+    pointer-events: none;
+}
+.slide-bg-overlay.darken-20 {
+    background: rgba(0,0,0,0.2) !important;
+}
+.slide-bg-overlay.darken-10 {
+    background: rgba(0,0,0,0.1) !important;
+}
+.slide-bg-overlay.darken-30 {
+    background: rgba(0,0,0,0.3) !important;
+}
+.slide-bg-overlay.darken-25 {
+    background: rgba(0,0,0,0.25) !important;
+}
+.slide-bg-overlay.darken-40 {
+    background: rgba(0,0,0,0.4) !important;
+}
+.slide-bg-overlay.darken-50 {
+    background: rgba(0,0,0,0.6) !important;
+    backdrop-filter: blur(2px);
+}
+.slide-bg-overlay.darken-35 {
+    background: rgba(0,0,0,0.35) !important;
+}
+.slide-bg-overlay.industry-dark {
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(0,0,0,0.5) !important;
+    z-index: 5 !important;
+    pointer-events: none;
+}
+.slide-bg-overlay.light{background:linear-gradient(90deg,rgba(255,255,255,.94) 0%,rgba(255,255,255,.88) 48%,rgba(255,255,255,.62) 100%),radial-gradient(circle at 84% 20%,rgba(34,196,216,.16),transparent 32%)}
+.slide-grid{position:absolute;inset:0;z-index:2;opacity:.08;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.55) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.42) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(to bottom,black,transparent 70%)}
+.brand-logo{display:none !important;}
+.slide-inner{position:relative;z-index:10;width:100%;height:100%;padding:clamp(38px,5.2vh,64px) clamp(46px,5.5vw,82px) clamp(36px,5vh,60px)}
+.eyebrow{font-family:"Montserrat",sans-serif;font-size:clamp(9px,.8vw,11px);line-height:1;letter-spacing:.32em;text-transform:uppercase;color:var(--blue);font-weight:900;margin-bottom:clamp(12px,1.9vh,18px)}
+.title{font-family:"Montserrat",sans-serif;font-weight:900;letter-spacing:-.055em;color:var(--ink);line-height:1.04}
+.accent{color:var(--blue)}
+/* Nav outside frame */
+.nav-controls{height:clamp(40px,5.5vh,48px);display:flex;align-items:center;justify-content:center;gap:clamp(20px,3vw,34px);user-select:none;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.54);border:1px solid rgba(7,24,45,.10);backdrop-filter:blur(12px)}
+.nav-btn{width:clamp(34px,4.2vh,42px);height:clamp(34px,4.2vh,42px);border-radius:999px;border:1px solid rgba(7,24,45,.13);background:rgba(255,255,255,.54);color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s ease}
+.nav-btn:hover:not(:disabled){transform:translateY(-1px);background:var(--ink);color:white;border-color:var(--ink);box-shadow:0 12px 24px rgba(7,24,45,.16)}
+.nav-btn:disabled{opacity:.28;cursor:default}
+.nav-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.slide-counter{font-family:"Montserrat",sans-serif;font-size:12px;letter-spacing:.22em;color:rgba(7,24,45,.72);font-weight:900;min-width:78px;text-align:center}
+.lang-switcher{display:flex;gap:8px;margin-left:clamp(12px, 2vw, 24px);padding-left:clamp(12px, 2vw, 24px);border-left:1px solid rgba(7,24,45,0.15)}
+.lang-btn{padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.54);border:1px solid rgba(7,24,45,.12);backdrop-filter:blur(14px);color:var(--ink);font-family:"Montserrat",sans-serif;font-size:11px;font-weight:900;cursor:pointer;transition:.2s var(--ease);text-transform:uppercase;letter-spacing:.12em;box-shadow:0 6px 16px rgba(0,0,0,.04)}
+.lang-btn:hover{background:rgba(255,255,255,.85);transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.06);border-color:var(--blue)}
+.lang-btn.active{background:var(--ink);color:white;border-color:var(--ink);box-shadow:0 8px 24px rgba(7,24,45,.18)}
+/* Cover */
+.cover .slide-inner{display:grid;place-items:center;text-align:center;padding-top:clamp(50px,7vh,82px)}
+.cover-panel{width:min(1080px,90%);transform:translateY(6px);position:relative;}
+.cover-title{font-family:"Montserrat",sans-serif;font-size:clamp(58px,8.6vw,130px);line-height:.88;font-weight:900;letter-spacing:.035em;text-transform:uppercase;color:#fff;text-shadow:0 22px 46px rgba(0,0,0,.38),0 3px 12px rgba(0,0,0,.48);margin-bottom:clamp(18px,3vh,28px)}
+.cover-subtitle{margin:0 auto;max-width:880px;color:rgba(255,255,255,.96);font-size:clamp(18px,2vw,31px);font-weight:800;line-height:1.24;text-shadow:0 12px 28px rgba(0,0,0,.50)}
+.cover-badge{margin-top:clamp(18px,3.2vh,30px);display:inline-flex;align-items:center;justify-content:center;padding:12px 24px;border-radius:999px;background:rgba(7,24,45,0.52);color:#fff;border:1px solid rgba(255,255,255,0.30);backdrop-filter:blur(18px);font-size:clamp(10px,.85vw,12px);font-weight:900;letter-spacing:.18em;text-transform:uppercase;box-shadow:0 18px 42px rgba(0,0,0,0.24)}
+.cover-badge.plain{background:none !important; border:none !important; box-shadow:none !important; padding:0 !important; backdrop-filter:none !important;}
+/* Company */
+.company .slide-inner{display:flex;align-items:center;justify-content:center}
+.company-card{width:min(1240px,100%);height:100%;max-height:575px;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(260px,340px);gap:clamp(24px,3.4vw,42px);align-items:center;padding:clamp(24px,3.4vh,34px) clamp(28px,3.5vw,44px);border-radius:28px;background:rgba(255,255,255,.76);border:1px solid rgba(255,255,255,.78);backdrop-filter:blur(28px);box-shadow:0 22px 60px rgba(7,24,45,.10)}
+.company h1{font-size:clamp(30px,3.4vw,50px);max-width:760px;margin-bottom:clamp(16px,2.4vh,24px)}
+.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,1.6vw,16px);margin-bottom:clamp(14px,2.2vh,20px)}
+.metric{padding:clamp(14px,2vh,18px) clamp(16px,1.8vw,20px);border-radius:20px;background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(232,248,253,.76));border:1px solid rgba(7,24,45,.08)}
+.metric-value{font-family:"Montserrat",sans-serif;font-size:clamp(28px,3vw,40px);font-weight:900;color:var(--blue);letter-spacing:-.045em;line-height:.9;margin-bottom:10px}
+.metric-label{color:var(--ink-soft);font-size:clamp(10px,.9vw,12px);font-weight:800;line-height:1.35}
+.office-table{width:100%;border-collapse:collapse;overflow:hidden;border-radius:18px;background:rgba(255,255,255,.62);border:1px solid var(--line)}
+.office-table td{padding:clamp(9px,1.5vh,12px) clamp(12px,1.6vw,16px);border-bottom:1px solid var(--line);color:var(--ink-soft);font-size:clamp(11px,.9vw,13px);font-weight:650}
+.office-table tr:last-child td{border-bottom:0}
+.office-table td:first-child{width:150px;color:var(--blue);font-weight:900}
+.company-desc{margin-top:clamp(10px,1.8vh,14px);color:var(--ink-soft);font-size:clamp(11px,1vw,13.5px);line-height:1.48;font-weight:700}
+.founder-card{position:relative;height:100%;max-height:500px;min-height:0;border-radius:26px;overflow:hidden;background:#d7e7ee;box-shadow:0 24px 52px rgba(7,24,45,.18);border:7px solid rgba(255,255,255,.86)}
+.founder-card img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.founder-card::after{content:"";position:absolute;inset:42% 0 0;background:linear-gradient(to top,rgba(5,14,28,.92),transparent)}
+.founder-caption{position:absolute;z-index:2;left:20px;right:20px;bottom:18px;color:#fff}
+.founder-caption strong{display:block;font-family:"Montserrat",sans-serif;font-size:clamp(20px,1.9vw,25px);line-height:1;margin-bottom:8px;font-weight:900;letter-spacing:-.03em}
+.founder-caption span{color:#8be8f4;font-size:clamp(9px,.75vw,11px);font-weight:900;text-transform:uppercase;letter-spacing:.11em}
+/* Benefits */
+.benefits .slide-inner{display:flex;align-items:center;justify-content:center}
+.benefits-layout{width:min(1240px,100%);height:100%;max-height:560px;display:grid;grid-template-columns:minmax(300px,405px) minmax(0,1fr);gap:clamp(18px,2.2vw,26px);align-items:stretch}
+.benefits-hero{border-radius:28px;overflow:hidden;position:relative;background-image:url('data/img_2319560637765265143.jpg');background-size:cover;background-position:center;box-shadow:0 24px 60px rgba(7,24,45,.14);border:1px solid rgba(255,255,255,.62);min-height:0}
+.benefits-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(6,18,34,.88),rgba(6,18,34,.18) 55%,rgba(255,255,255,.12)),radial-gradient(circle at 20% 18%,rgba(255,255,255,.28),transparent 28%)}
+.benefits-hero-content{position:absolute;z-index:2;left:clamp(22px,2.2vw,30px);right:clamp(22px,2.2vw,30px);bottom:clamp(22px,2.2vw,30px);color:#fff}
+.benefits-hero-content .eyebrow{color:#9ff3ff;margin-bottom:12px}
+.benefits-hero-content h1{font-family:"Montserrat",sans-serif;font-size:clamp(34px,3.3vw,50px);line-height:.98;letter-spacing:-.055em;color:white;margin-bottom:16px;font-weight:900}
+.benefits-hero-content p{color:rgba(255,255,255,.88);line-height:1.50;font-weight:700;font-size:clamp(12px,1vw,14px)}
+.benefit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,1.4vw,16px);align-content:stretch}
+.benefit-card{position:relative;overflow:hidden;border-radius:24px;padding:clamp(16px,2vh,20px);background:radial-gradient(circle at 100% 0%,rgba(34,196,216,.18),transparent 34%),linear-gradient(135deg,rgba(255,255,255,.94),rgba(241,249,252,.84));border:1px solid rgba(255,255,255,.82);box-shadow:0 16px 38px rgba(7,24,45,.08);display:flex;flex-direction:column;justify-content:space-between;min-height:0;transition:transform .24s ease,box-shadow .24s ease}
+.benefit-card::before{content:"";position:absolute;left:0;top:18px;bottom:18px;width:4px;border-radius:999px;background:linear-gradient(to bottom,var(--blue),var(--cyan));opacity:.85}
+.benefit-card:hover{transform:translateY(-4px);box-shadow:0 22px 48px rgba(7,24,45,.13)}
+.benefit-top{display:flex;align-items:center;gap:12px;margin-bottom:clamp(10px,1.6vh,16px)}
+.benefit-index{width:38px;height:38px;border-radius:15px;display:grid;place-items:center;background:rgba(20,121,212,.10);color:var(--blue);font-family:"Montserrat",sans-serif;font-size:12px;font-weight:900;letter-spacing:.06em}
+.benefit-label{font-size:10px;color:var(--muted);letter-spacing:.13em;text-transform:uppercase;font-weight:900}
+.benefit-card p{color:var(--ink);font-weight:800;line-height:1.38;font-size:clamp(12px,1vw,14.5px)}
+/* Spaced Centered Services Grid */
+.nsvc-slide .slide-inner { display: grid; place-items: start center; padding-top: clamp(25px, 5vh, 60px); padding-bottom: 20px; }
+.nsvc-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; }
+.nsvc-title { font-family: "Montserrat", sans-serif; font-size: clamp(30px, 3.5vw, 46px); line-height: .98; letter-spacing: -.04em; color: white; margin-bottom: 35px; font-weight: 900; text-align: center; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 0 10px 20px rgba(0,0,0,0.5); text-transform: none !important; }
+.nsvc-panel { width: 100%; display: flex; justify-content: center; background: transparent !important; border: none !important; padding: 0; margin-top: -5px; }
+.nsvc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 90px; width: fit-content; margin: 0 auto; justify-items: center; align-items: center; }
+.nsvc-card { display: flex; flex-direction: column; align-items: center; gap: 14px; transition: transform 0.4s var(--ease); }
+.nsvc-card:hover { transform: translateY(-8px) scale(1.04); }
+.nsvc-circle { width: 170px; height: 170px; border-radius: 50%; border: 3.5px solid #EFC96A; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.6); position: relative; }
+.nsvc-circle img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.nsvc-card:hover .nsvc-circle img { transform: scale(1.1); }
+.nsvc-label { width: 200px; height: 38px; background: rgba(7, 24, 45, 0.95); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; border-radius: 10px; border: 1.8px solid #EFC96A; box-shadow: 0 6px 15px rgba(0,0,0,0.4); }
+.nsvc-label span { color: #fff; font-family: "Montserrat", sans-serif; font-size: 17px; font-weight: 900; letter-spacing: 0.05em; text-transform: uppercase; }
+/* Pricing */
+.pricing .slide-inner{display:flex;align-items:center;justify-content:center}
+.pricing-wrap{width:min(1240px,100%);text-align:center}
+.pricing-wrap h1{font-size:clamp(28px,3vw,46px);margin-bottom:clamp(4px,1vh,8px)}
+.pricing-wrap .sub{color:var(--ink-soft);font-size:clamp(11px,1vw,14px);font-weight:700;margin-bottom:clamp(16px,2.6vh,28px)}
+.price-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.6vw,22px);align-items:stretch}
+.price-card{border-radius:24px;padding:clamp(20px,2.8vh,30px) clamp(18px,1.8vw,26px);background:linear-gradient(135deg,rgba(255,255,255,.94),rgba(241,249,252,.84));border:1px solid rgba(7,24,45,.08);box-shadow:0 16px 38px rgba(7,24,45,.06);display:flex;flex-direction:column;gap:clamp(10px,1.4vh,16px);transition:transform .24s ease,box-shadow .24s ease;text-align:left}
+.price-card:hover{transform:translateY(-4px);box-shadow:0 22px 48px rgba(7,24,45,.12)}
+.price-card.featured{background:linear-gradient(135deg,var(--blue),var(--blue-deep));color:#fff;border-color:transparent;box-shadow:0 20px 50px rgba(20,121,212,.28)}
+.price-card.featured .price-name,.price-card.featured .price-value,.price-card.featured .price-freq,.price-card.featured .price-feat{color:#fff}
+.price-card.featured .price-feat::before{background:rgba(255,255,255,.3)}
+.price-name{font-family:"Montserrat",sans-serif;font-size:clamp(11px,.9vw,13px);font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:var(--blue)}
+.price-value{font-family:"Montserrat",sans-serif;font-size:clamp(32px,3.4vw,48px);font-weight:900;letter-spacing:-.04em;color:var(--ink);line-height:1}
+.price-freq{font-size:clamp(10px,.8vw,12px);font-weight:700;color:var(--muted);margin-top:-6px}
+.price-monthly{font-size:clamp(10px,.8vw,12px);font-weight:800;color:var(--ink-soft);padding:6px 0;border-top:1px dashed var(--line)}
+.price-feats{list-style:none;display:flex;flex-direction:column;gap:clamp(6px,1vh,10px);margin-top:auto}
+.price-feat{font-size:clamp(11px,.9vw,13px);font-weight:700;color:var(--ink-soft);padding-left:16px;position:relative;line-height:1.35}
+.price-feat::before{content:"";position:absolute;left:0;top:6px;width:6px;height:6px;border-radius:99px;background:var(--cyan)}
+.price-points{margin-top:auto;padding-top:clamp(8px,1.2vh,14px);border-top:1px solid var(--line);font-family:"Montserrat",sans-serif;font-size:clamp(10px,.85vw,12px);font-weight:900;color:var(--blue)}
+.price-card.featured .price-points{border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.9)}
+/* Partnership */
+.partnership .slide-inner{display:flex;align-items:center;justify-content:center}
+.partner-layout{width:min(1280px,100%); display:grid; grid-template-columns:minmax(0,1fr) minmax(280px,380px); gap:clamp(20px,2.5vw,35px); align-items:center}
+.partner-info h1{font-size:clamp(28px,3.2vw,44px); margin-bottom:12px; line-height:1.1}
+.partner-info .partner-desc{color:var(--ink-soft); font-size:clamp(12px,1.1vw,15px); font-weight:700; line-height:1.45; margin-bottom:18px}
+.partner-feats{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
+.partner-feat{display:flex; align-items:center; gap:10px; padding:clamp(10px,1.4vh,15px) clamp(12px,1.2vw,16px); border-radius:18px; background:linear-gradient(135deg,rgba(255,255,255,.94),rgba(241,249,252,.84)); border:1px solid rgba(7,24,45,.06); box-shadow:0 10px 24px rgba(7,24,45,.04); transition:transform .24s ease}
+.partner-feat:hover{transform:translateY(-3px)}
+.partner-feat-icon{width:42px; height:42px; border-radius:12px; background:rgba(20,121,212,.08); color:var(--blue); display:grid; place-items:center; font-size:20px; flex-shrink:0}
+.partner-feat span{font-size:clamp(12px, 1.1vw, 16px); font-weight:800; color:var(--ink)}
+.partner-cta{margin-top:20px; display:inline-flex; align-items:center; gap:10px; padding:12px 24px; border-radius:999px; background:var(--blue); color:#fff; font-family:"Montserrat",sans-serif; font-size:12px; font-weight:900; letter-spacing:.1em; text-transform:uppercase; border:none; box-shadow:0 12px 32px rgba(20,121,212,.24)}
+.partner-visual{border-radius:24px; overflow:hidden; position:relative; min-height:clamp(280px,45vh,420px); background-size:cover; background-position:center; box-shadow:0 22px 55px rgba(7,24,45,.14); border:1px solid rgba(255,255,255,.62)}
+.partner-visual::after{content:""; position:absolute; inset:0; background:linear-gradient(to top,rgba(5,14,28,.4),transparent 40%)}
+/* Generic text slide */
+.generic .slide-inner{display:flex;align-items:center;justify-content:center}
+.gen-wrap{width:min(1100px,100%);text-align:center}
+.gen-wrap h1{font-size:clamp(28px,3.2vw,48px);margin-bottom:clamp(10px,1.6vh,18px)}
+.gen-wrap .gen-body{color:var(--ink-soft);font-size:clamp(13px,1.1vw,16px);font-weight:700;line-height:1.55;max-width:900px;margin:0 auto clamp(16px,2.4vh,28px)}
+.gen-wrap .gen-highlight{display:inline-block;padding:10px 24px;border-radius:999px;background:rgba(20,121,212,.10);color:var(--blue);font-family:"Montserrat",sans-serif;font-size:clamp(12px,1vw,15px);font-weight:900;letter-spacing:.08em}
+.gen-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:clamp(12px,1.4vw,18px);margin-top:clamp(14px,2vh,22px)}
+.gen-card{padding:clamp(16px,2vh,22px);border-radius:20px;background:rgba(255,255,255,.88);border:1px solid rgba(7,24,45,.06);box-shadow:0 10px 28px rgba(7,24,45,.05);text-align:left}
+.gen-card strong{display:block;font-family:"Montserrat",sans-serif;font-size:clamp(11px,.9vw,13px);font-weight:900;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.gen-card p{font-size:clamp(11px,.95vw,13px);font-weight:700;color:var(--ink-soft);line-height:1.4}
+/* Destinations */
+.dest .slide-inner{display:flex;align-items:center;justify-content:center}
+.dest-wrap{width:min(1240px,100%);text-align:center}
+.dest-wrap h1{font-size:clamp(26px,2.8vw,42px);margin-bottom:clamp(4px,1vh,8px)}
+.dest-wrap .sub{color:var(--ink-soft);font-size:clamp(11px,1vw,14px);font-weight:700;margin-bottom:clamp(14px,2.2vh,22px)}
+.dest-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.6vw,22px)}
+.dest-card{
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    background: rgba(0,0,0,0.3) !important;
+    border: 1px solid rgba(255,255,255,0.4) !important;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3) !important;
+    text-align: left !important;
+    transition: transform .24s ease, border-color 0.24s ease !important;
+    backdrop-filter: blur(10px) !important;
+}
+.dest-card:hover{
+    transform: translateY(-8px) !important;
+    border-color: rgba(239, 201, 106, 0.8) !important;
+}
+.dest-card-img{
+    height: clamp(140px, 18vh, 200px);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.dest-card-body{
+    padding: clamp(16px, 2vh, 24px) !important;
+    position: relative;
+}
+.dest-card-body h3{
+    font-family: "Montserrat", sans-serif !important;
+    font-size: clamp(18px, 1.6vw, 22px) !important;
+    font-weight: 900 !important;
+    color: white !important;
+    margin-bottom: 8px !important;
+    text-transform: none !important;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000 !important;
+}
+.dest-card-body .dest-detail{
+    font-size: 18px !important;
+    color: rgba(255,255,255,1) !important;
+    font-weight: 800 !important;
+    margin-bottom: 12px !important;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000 !important;
+}
+.dest-card-body .dest-prices{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding-top: 15px;
+}
+.dest-card-body .dest-retail{
+    font-size: 20px !important;
+    color: #ff4d4d !important;
+    position: relative !important;
+    display: inline-block !important;
+    font-weight: 800;
+    text-shadow: 0.3px 0.3px 0 #000, -0.3px -0.3px 0 #000 !important;
+}
+.dest-card-body .dest-retail::after {
+    content: "";
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    top: 55%;
+    height: 1.5px;
+    background: #ff4d4d;
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+}
+.dest-card-body .dest-our{
+    font-family: "Montserrat", sans-serif !important;
+    font-size: clamp(20px, 2vw, 28px) !important;
+    font-weight: 900 !important;
+    color: #5bc0eb !important;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000 !important;
+}
+.ts-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:40px}
+.es-travelsite { transform: translateY(-15px); }
+.es-travelsite .ts-grid { gap: 10px; }
+.es-travelsite .ts-card-footer { font-size: 19px; padding: 15px 5px; }
+.es-travelsite .ts-card-header span { font-size: 16px; }
+.ts-card{background:rgba(255,255,255,0.12);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,0.24);border-radius:24px;overflow:hidden;transition:all 0.3s var(--ease);display:flex;flex-direction:column;cursor:default}
+.ts-card:hover{transform:translateY(-8px);box-shadow:0 15px 35px rgba(0,0,0,0.3);background:rgba(255,255,255,0.22)}
+.ts-card-header{padding:15px 20px;display:flex;align-items:center;gap:12px;background:rgba(0,0,0,0.2)}
+.ts-card-icon{width:36px;height:36px;border-radius:50%;background:#5bc0eb;display:flex;align-items:center;justify-content:center;font-size:18px;color:#000;box-shadow:0 0 10px rgba(91,192,235,0.4)}
+.ts-card-header span{font-family:"Montserrat",sans-serif;font-weight:900;font-size:18px;color:white;letter-spacing:0.05em;text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000 !important;}
+.ts-card-img{height:180px;background-size:cover;background-position:center;border-top:1px solid rgba(239,201,106,0.3);border-bottom:1px solid rgba(239,201,106,0.3);filter:brightness(1.3) contrast(1.05)}
+.ts-card-footer{padding:15px;text-align:center;font-size:18px;font-weight:700;color:white;text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000 !important;}
+/* Comp comparison slide */
+.comp-slide-layout{display:grid;grid-template-columns:1.2fr 1fr 1.2fr;gap:clamp(15px, 2.5vw, 35px);height:auto;align-items:stretch;position:relative;z-index:2;padding:0 40px}
+.comp-sidebar{display:flex;flex-direction:column;gap:12px;justify-content:center}
+.comp-sidebar h1{font-size:clamp(34px, 3.8vw, 56px) !important;line-height:1.05 !important;margin:0 0 15px 0 !important;text-align:left; color: white !important; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 10px 30px rgba(0,0,0,0.8) !important;}
+.comp-sidebar .eyebrow{color:#5bc0eb !important;font-size:20px !important;letter-spacing:0.12em !important;margin:0 0 8px 0 !important; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000 !important;}
+.comp-sidebar p{font-size:22px !important; font-weight:700 !important; color:white !important; line-height:1.4 !important; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 4px 10px rgba(0,0,0,0.8) !important; text-align:left; margin:0 !important}
+.comp-mid-column{display:flex;flex-direction:column;justify-content:space-between;align-items:center;justify-self:center;padding:10px 0}
+.comp-feature{background:rgba(0,0,0,0.4);backdrop-filter:blur(20px);border:1.5px solid rgba(239, 201, 106, 0.5);border-radius:12px;padding:12px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;transition:all 0.3s var(--ease);width:230px;height:auto;justify-content:center}
+.comp-feature:hover{border-color:rgba(239, 201, 106, 1);transform:scale(1.05)}
+.comp-feature-icon{width:48px;height:48px;border-radius:10px;background:rgba(20,121,212,0.2);display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--blue);border:1px solid rgba(20,121,212,0.3)}
+.comp-feature-text strong{display:block;font-size:20px;color:#5bc0eb;text-transform:uppercase;margin-bottom:4px;font-family:"Montserrat",sans-serif;font-weight:900}
+.comp-feature-text span{font-size:17px;color:rgba(255,255,255,1);font-weight:700;line-height:1.2}
+.comp-visuals{display:flex;justify-content:flex-end;gap:20px;align-items:stretch;padding:10px 0}
+.comp-card-v{width:240px;background:white;border-radius:12px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,0.6);border:2px solid white;display:flex;flex-direction:column;transition:transform 0.3s ease}
+.comp-card-v.trav{border-color:#5bc0eb}
+.es-comparison-14 .comp-mid-column { gap: 12px !important; justify-content: space-between !important; transform: none !important; padding: 10px 0 !important; height: 100% !important; }
+.es-comparison-14 .comp-feature { padding: 10px 15px !important; width: 230px !important; height: calc(33% - 10px) !important; }
+.es-comparison-14 .comp-feature-text span { font-size: 15px !important; }
+.comp-card-v-header{height:40px;display:flex;align-items:center;justify-content:center;background:#fff;border-bottom:1px solid rgba(0,0,0,0.06)}
+.comp-card-v-header img{max-height:24px;width:auto;object-fit:contain}
+.comp-card-v-img-wrap{flex:1;width:100%;overflow-y:auto;background:#f8f9fa}
+.comp-card-v-img{width:100%;height:auto;display:block}
+.comp-card-v-footer{padding:12px 15px;background:#8b0000;color:white;text-align:center;display:flex;justify-content:space-between;align-items:center;font-weight:900;font-size:18px;font-family:"Montserrat",sans-serif;height:45px}
+.comp-card-v.trav .comp-card-v-footer{background:#0b4e91}
+.comp-card-v-footer span:first-child{font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:0.9}
+.comp-grad-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0) 100%);pointer-events:none;z-index:1}
+/* Comp table */
+.comptable .slide-inner{display:flex;align-items:center;justify-content:center;overflow-y:auto}
+.comp-wrap{width:min(1240px,100%);text-align:center}
+.comp-wrap h1{font-size:clamp(24px,2.6vw,38px);margin-bottom:clamp(4px,1vh,8px)}
+.comp-wrap .sub{color:var(--ink-soft);font-size:clamp(10px,.9vw,13px);font-weight:700;margin-bottom:clamp(12px,1.8vh,18px)}
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:clamp(10px,1.2vw,16px)}
+.comp-rank{border-radius:20px;padding:clamp(14px,1.8vh,20px) clamp(12px,1.2vw,16px);background:rgba(255,255,255,.88);border:1px solid rgba(7,24,45,.06);box-shadow:0 10px 24px rgba(7,24,45,.05);text-align:center;transition:transform .24s ease}
+.comp-rank:hover{transform:translateY(-3px)}
+.comp-rank-name{font-family:"Montserrat",sans-serif;font-size:clamp(10px,.85vw,12px);font-weight:900;color:var(--blue);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.comp-rank-daily{font-family:"Montserrat",sans-serif;font-size:clamp(20px,2.2vw,30px);font-weight:900;color:var(--ink);letter-spacing:-.03em;line-height:1;margin-bottom:4px}
+.comp-rank-monthly{font-size:clamp(10px,.85vw,12px);color:var(--muted);font-weight:700;margin-bottom:6px}
+.comp-rank-annual{font-size:clamp(10px,.85vw,12px);color:var(--cyan);font-weight:900}
+.comp-rank.feat{background:linear-gradient(135deg,var(--blue),var(--blue-deep));border-color:transparent;box-shadow:0 16px 36px rgba(20,121,212,.22)}
+.comp-rank.feat .comp-rank-name,.comp-rank.feat .comp-rank-daily,.comp-rank.feat .comp-rank-monthly,.comp-rank.feat .comp-rank-annual{color:#fff}
+.comp-disclaimer{margin-top:clamp(10px,1.4vh,16px);font-size:clamp(9px,.75vw,11px);color:var(--muted);font-weight:600;font-style:italic}
+/* New Strip Table */
+.comp-strip-container { display: flex; flex-direction: column; gap: 8px; }
+.comp-strip {
+    display: grid;
+    grid-template-columns: 1fr 80px 100px 100px 120px 200px 100px 200px;
+    align-items: center;
+    background: rgba(255,255,255,0.88) !important;
+    backdrop-filter: blur(10px);
+    border-radius: 50px;
+    padding: 10px 25px;
+    border: 1px solid rgba(255,255,255,0.5);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    color: black !important;
+    font-weight: 900 !important;
+    text-align: center;
+    font-size: 19px;
+}
+.comp-strip:hover { transform: scale(1.01) translateY(-2px); background: rgba(255,255,255,1) !important; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+.comp-strip.header {
+    background: rgba(0,0,0,0.75) !important;
+    color: white !important;
+    border: 2px solid #EFC96A;
+    box-shadow: 0 4px 15px rgba(239, 201, 106, 0.3);
+    backdrop-filter: blur(10px);
+    font-size: 17px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+.comp-strip.header div { color: white !important; }
+.comp-strip.highlight {
+    background: linear-gradient(180deg, #FAD674 0%, #D8A53A 100%) !important;
+    border: 2px solid #FFEBAA;
+    box-shadow: 0 10px 30px rgba(216, 165, 58, 0.4);
+    color: #0d1b2a !important;
+}
+.comp-strip.highlight div { color: #0d1b2a !important; }
+.comp-strip-container div[class^="comp-col-"] { padding: 0 5px; }
+.comp-strip-container .comp-col-1 { text-align: left; }
+.comp-strip-container .comp-col-5 { color: black !important; }
+.comp-strip-container .comp-col-6 { color: var(--blue) !important; }
+.comp-strip-container .comp-col-7 { color: black !important; }
+.comp-strip-container .comp-col-8 { color: #d9534f !important; }
+
+.premium-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "Manrope", sans-serif;
+    color: white;
+}
+.premium-table th {
+    background: white !important;
+    padding: 14px 10px;
+    font-size: 17px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    border-bottom: 2px solid rgba(0,0,0,0.1);
+    color: black !important;
+    text-shadow: none !important;
+}
+.premium-table td {
+    padding: 10px 10px;
+    font-size: 17px;
+    font-weight: 900 !important;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    color: white !important;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000 !important;
+}
+.premium-table th, .premium-table td {
+    border-right: 1px solid rgba(255,255,255,0.2);
+}
+.premium-table tr.highlight {
+    background: white !important;
+}
+.premium-table tr.highlight td {
+    color: black !important;
+    text-shadow: none !important;
+    border-color: rgba(0,0,0,0.1);
+}
+.premium-table tr.highlight td:first-child {
+    font-weight: 900;
+}
+.premium-table tr:hover {
+    background: rgba(255,255,255,0.05);
+}
+.premium-table tr:last-child td {
+    border-bottom: none;
+}
+.premium-table th:nth-child(2), .premium-table td:nth-child(2) { width: 60px; }
+.premium-table th:nth-child(3), .premium-table td:nth-child(3) { width: 90px; }
+.premium-table th:nth-child(4), .premium-table td:nth-child(4) { width: 90px; }
+.premium-table th:nth-child(6), .premium-table td:nth-child(6) { min-width: 180px; }
+.premium-table th:nth-child(7), .premium-table td:nth-child(7) { min-width: 130px; }
+.premium-table th:nth-child(8), .premium-table td:nth-child(8) { min-width: 220px; }
+/* CTA */
+.cta .slide-inner{display:grid;place-items:center;text-align:center;padding:clamp(50px,7vh,82px) clamp(46px,5.5vw,82px)}
+.cta-panel{width:min(960px,90%)}
+.cta-panel h1{font-family:"Montserrat",sans-serif;font-size:clamp(36px,5vw,72px);font-weight:900;color:#fff;letter-spacing:-.03em;line-height:1;text-shadow:0 16px 36px rgba(0,0,0,.4);margin-bottom:clamp(14px,2.4vh,22px)}
+.cta-panel p{color:rgba(255,255,255,.92);font-size:clamp(14px,1.4vw,20px);font-weight:700;line-height:1.45;text-shadow:0 8px 20px rgba(0,0,0,.4);max-width:780px;margin:0 auto}
+.cta-panel .cover-badge{margin-top:clamp(20px,3vh,32px)}
+
+/* Enhancements based on user feedback */
+.title.outlined, .cover-title.outlined, .cta-panel h1.outlined {
+    text-shadow: 0 4px 12px rgba(0,0,0,0.5), 0 2px 4px rgba(0,0,0,0.8) !important;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.2);
+}
+.dest-card-body h3 { font-size: clamp(14px, 1.2vw, 18px); }
+.dest-card-body .dest-detail { font-size: clamp(12px, 1vw, 14px); }
+.dest-card-body .dest-retail { font-size: clamp(12px, 1vw, 14px); }
+.dest-card-body .dest-our { font-size: clamp(18px, 1.8vw, 24px); }
+.gen-card { transition: transform 0.24s ease, box-shadow 0.24s ease; }
+.gen-card:hover { transform: translateY(-4px); box-shadow: 0 16px 38px rgba(7,24,45,0.12); }
+.comp-grid.list-view { grid-template-columns: 1fr; gap: 8px; }
+.comp-grid.list-view .comp-rank { display: flex; justify-content: space-between; align-items: center; padding: 12px 24px; text-align: left; }
+.comp-grid.list-view .comp-rank-name { margin-bottom: 0; font-size: 14px; width: 30%; }
+.comp-grid.list-view .comp-rank-daily { margin-bottom: 0; font-size: 20px; width: 20%; }
+.comp-grid.list-view .comp-rank-monthly { margin-bottom: 0; font-size: 14px; width: 25%; }
+.comp-grid.list-view .comp-rank-annual { margin-bottom: 0; font-size: 14px; width: 25%; text-align: right; }
+.model-diagram { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
+.model-row { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.9); padding: 16px 24px; border-radius: 20px; box-shadow: 0 10px 24px rgba(0,0,0,0.05); }
+.model-arrow { color: var(--blue); font-weight: bold; font-size: 24px; }
+.model-crossed { text-decoration: line-through; color: #e74c3c; opacity: 0.7; }
+
+/* FULL INJECT */
+.company .company-card > div:first-child {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+}
+/* Services slide dark mode override */
+.services .title {
+    color: white !important;
+    font-size: clamp(40px, 6vw, 80px) !important;
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 10px 30px rgba(0,0,0,0.8) !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.02em !important;
+}
+.services .sub {
+    color: white !important;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 4px 12px rgba(0,0,0,0.8) !important;
+}
+.services .svc-card {
+    border: 1px solid rgba(239, 201, 106, 0.6) !important;
+    border-radius: 16px !important;
+    min-height: 180px !important;
+}
+.services .svc-card::after {
+    background: transparent !important;
+}
+.services .svc-card span {
+    text-align: center !important;
+    font-size: clamp(20px, 2vw, 28px) !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 4px 12px rgba(0,0,0,0.8) !important;
+    bottom: clamp(16px, 2.5vh, 24px) !important;
+    width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+}
+
+/* Text outlines for better readability on light backgrounds */
+.company h1.title, .benefits-hero-content h1 {
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 10px 30px rgba(0,0,0,0.5) !important;
+}
+.company .eyebrow, .company .company-desc, .company .office-table td, 
+.benefits-hero-content .eyebrow, .benefits-hero-content p {
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 4px 12px rgba(0,0,0,0.6) !important;
+}
+.company h1.title .accent {
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 4px 12px rgba(0,0,0,0.6) !important;
+}
+
+
+/* Benefits dark mode override */
+.benefits-layout {
+    width: min(1300px, 100%) !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) !important;
+    gap: clamp(30px, 4vw, 60px) !important;
+    align-items: center !important;
+    height: auto !important;
+    max-height: none !important;
+}
+.benefits-hero {
+    background: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 80%, transparent 100%) !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 20px !important;
+    min-height: auto !important;
+}
+.benefits-hero::after { display: none !important; }
+.benefits-hero-content {
+    position: relative !important;
+    left: 0 !important; right: 0 !important; bottom: 0 !important;
+    padding: 20px 0 20px 30px !important;
+}
+.company .eyebrow, 
+.benefits-hero-content .eyebrow, 
+.partnership .eyebrow, 
+.referral-layout .eyebrow,
+.comparison .eyebrow,
+.businessmodel .eyebrow,
+.comptable .eyebrow {
+    color: #5bc0eb !important;
+    font-size: clamp(18px, 1.8vw, 24px) !important;
+    letter-spacing: 2px !important;
+    font-weight: 900 !important;
+    text-shadow: 1.2px 1.2px 0 #000, -1.2px -1.2px 0 #000, 1.2px -1.2px 0 #000, -1.2px 1.2px 0 #000, 0 4px 12px rgba(0,0,0,0.8) !important;
+    margin-bottom: 12px !important;
+    text-transform: uppercase !important;
+}
+.bm-card {
+    background: rgba(255,255,255,0.95) !important;
+    border-radius: 24px !important;
+    padding: 20px !important;
+    display: flex !important;
+    gap: 15px !important;
+    align-items: start !important;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3) !important;
+    border: 1px solid rgba(255,255,255,0.5) !important;
+    transition: all 0.3s cubic-bezier(.19,1,.22,1) !important;
+    cursor: default;
+}
+.bm-card:hover {
+    transform: scale(1.05) translateY(-5px) !important;
+    border-color: #EFC96A !important;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4) !important;
+}
+.bm-row {
+    transition: all 0.3s cubic-bezier(.19,1,.22,1) !important;
+    cursor: default;
+}
+.bm-row:hover {
+    transform: scale(1.02) translateY(-3px) !important;
+    border-color: #EFC96A !important;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5) !important;
+}
+.benefits-hero-content h1 {
+    color: white !important;
+    font-size: clamp(40px, 4.5vw, 70px) !important; padding-right: 8px !important;
+    line-height: 1.05 !important;
+    margin-bottom: 24px !important;
+    text-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+    font-family: "Montserrat", sans-serif !important;
+    font-weight: 900 !important;
+}
+.benefits-hero-content p {
+    color: white !important;
+    font-size: clamp(16px, 1.5vw, 22px) !important;
+    font-weight: 600 !important;
+    line-height: 1.5 !important;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+.benefits .benefit-grid {
+    gap: clamp(12px, 1.5vw, 20px) !important;
+}
+.benefits .benefit-card {
+    background: rgba(0,0,0,0.2) !important;
+    border: 1px solid rgba(239, 201, 106, 0.4) !important;
+    border-radius: 16px !important;
+    padding: clamp(16px, 2vh, 24px) clamp(20px, 2vw, 28px) !important;
+    backdrop-filter: blur(10px) !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+}
+.benefits .benefit-card:hover {
+    border-color: rgba(239, 201, 106, 0.8) !important;
+}
+.benefits .benefit-card::before { display: none !important; }
+.benefits .benefit-top {
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+    margin-bottom: 12px !important;
+}
+.benefits .benefit-icon {
+    font-size: 38px !important;
+    line-height: 1 !important;
+}
+.benefits .benefit-header {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+}
+.benefits .benefit-label {
+    color: #FAD674 !important;
+    font-size: clamp(16px, 1.4vw, 20px) !important;
+    font-family: "Montserrat", sans-serif !important;
+    font-weight: 900 !important;
+    letter-spacing: 1px !important;
+    margin: 0 !important;
+}
+.benefits .benefit-card p {
+    color: white !important;
+    font-size: clamp(11px, 1vw, 15px) !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+}
+.benefits .mini-divider {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+.benefits .mini-divider .line {
+    height: 1px !important;
+    width: 30px !important;
+    background: #EFC96A !important;
+    flex: none !important;
+}
+.benefits .mini-divider .diamond {
+    width: 6px !important;
+    height: 6px !important;
+    border: 1px solid #EFC96A !important;
+    transform: rotate(45deg) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+
+/* Company slide dark mode override */
+.company .company-card {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    grid-template-columns: minmax(0,1.4fr) minmax(280px,340px) !important;
+    gap: clamp(20px,3vw,40px) !important;
+    align-items: center !important;
+    height: auto !important;
+    max-height: none !important;
+}
+
+.company h1.title {
+    color: white !important;
+    font-size: clamp(28px,3.2vw,48px) !important;
+    text-transform: uppercase !important;
+    font-family: "Montserrat", sans-serif !important;
+    font-weight: 900 !important;
+    line-height: 1.1 !important;
+    margin-bottom: clamp(14px,2vh,24px) !important;
+}
+.company h1.title .accent {
+    color: #5bc0eb !important;
+}
+.company .metrics {
+    gap: clamp(12px,1.5vw,20px) !important;
+    margin-bottom: clamp(14px,2vh,24px) !important;
+}
+.company .metric {
+    background: rgba(0,0,0,0.2) !important;
+    border: 1px solid rgba(239, 201, 106, 0.4) !important;
+    backdrop-filter: blur(10px) !important;
+    padding: clamp(12px,1.5vh,18px) clamp(16px,2vw,24px) !important;
+    border-radius: 16px !important;
+}
+.company .metric-value {
+    color: white !important;
+    font-size: clamp(28px,3vw,42px) !important;
+    margin-bottom: 6px !important;
+}
+.company .metric-label {
+    color: rgba(255,255,255,0.9) !important;
+    font-size: clamp(11px,1vw,13px) !important;
+    font-weight: 700 !important;
+}
+.company .office-table {
+    background: transparent !important;
+    border: none !important;
+}
+.company .office-table td {
+    color: white !important;
+    font-size: clamp(16px,1.5vw,20px) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.15) !important;
+    padding: clamp(8px,1.2vh,12px) 0 !important;
+}
+.company .office-table td:first-child {
+    color: #5bc0eb !important;
+    font-size: clamp(18px,1.6vw,22px) !important;
+    text-transform: uppercase !important;
+    font-weight: 900 !important;
+    width: 160px !important;
+}
+.company .company-desc {
+    color: white !important;
+    font-size: clamp(12px,1.1vw,14px) !important;
+    font-weight: 500 !important;
+    margin-top: clamp(14px,2vh,24px) !important;
+}
+.company .founder-card {
+    border: 2px solid rgba(255,255,255,0.3) !important;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6) !important;
+    max-height: 420px !important;
+    height: auto !important;
+}
+.company .founder-caption span {
+    color: #5bc0eb !important;
+}
+
+.cover-panel {
+    width: 100% !important;
+    max-width: 1600px !important;
+}
+.cover-title {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block;
+    width: 100%;
+    letter-spacing: 0px !important;
+}
+.gold-badge {
+    text-align: left;
+}
+.gold-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin: 15px auto 35px;
+  width: 80%;
+  max-width: 600px;
+}
+.gold-divider .line {
+  height: 2px;
+  flex: 1;
+  background: #EFC96A;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+.gold-divider .diamond {
+  width: 14px;
+  height: 14px;
+  background: transparent;
+  border: 3px solid #EFC96A;
+  transform: rotate(45deg);
+  box-shadow: inset 0 0 4px rgba(0,0,0,0.5), 0 2px 4px rgba(0,0,0,0.5);
+}
+.gold-badge {
+    background: linear-gradient(180deg, #FAD674 0%, #D8A53A 100%);
+    color: #0d1b2a;
+    border: 2px solid #FFEBAA;
+    border-radius: 999px;
+    padding: 16px 40px;
+    font-size: 22px;
+    font-weight: 900;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    margin-top: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
+.gold-badge-icon {
+    background: #0d1b2a;
+    color: #F0CD72;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+.badge-gold {
+    background: linear-gradient(180deg, #FAD674 0%, #D8A53A 100%) !important;
+    color: #0d1b2a !important;
+    padding: 12px 40px;
+    border-radius: 50px;
+    font-weight: 900;
+    display: inline-block;
+    box-shadow: 0 10px 25px rgba(216, 165, 58, 0.4);
+    border: 2px solid #FFEBAA;
+    text-shadow: none !important;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+}
+.cover-title {
+    font-size: clamp(80px, 12vw, 180px) !important;
+    text-shadow: 0px 4px 15px rgba(0,0,0,0.8), 0px 8px 30px rgba(0,0,0,0.9) !important;
+}
+
+
+.title.outlined, .cover-title.outlined, .cta-panel h1.outlined {
+    text-shadow: 0 4px 12px rgba(0,0,0,0.5), 0 2px 4px rgba(0,0,0,0.8) !important;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.2);
+}
+.outlined-text {
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 8px 16px rgba(0,0,0,0.6);
+    color: white;
+}
+.dest-card-body h3 { font-size: clamp(18px, 1.6vw, 22px); color: var(--blue-deep); }
+.comp-grid.list-view .comp-rank { padding: 8px 24px; }
+.comp-grid.list-view .comp-rank-daily { font-size: 20px !important; }
+.tree-pay { padding: 10px 40px; }
+.four-trees { align-items: center; justify-items: center; }
+.benefit-index { display: none; }
+.benefit-top { margin-bottom: 5px; }
+.benefit-label { font-size: clamp(22px, 1.8vw, 28px) !important; color: var(--blue-deep); }
+.gen-card strong { font-size: 16px; }
+.gen-card p { font-size: 14px; }
+.dest-card-img { height: clamp(140px, 18vh, 200px); }
+.price-card { color: var(--ink); }
+
+
+
+.cover-title { font-size: clamp(66px, 9.8vw, 150px); }
+.cover-subtitle { font-size: clamp(20px, 2.3vw, 36px); }
+.benefit-card p { font-size: clamp(28px, 2.8vw, 38px) !important; line-height: 1.4; }
+.benefit-label { font-size: clamp(18px, 1.5vw, 24px) !important; }
+.svc-card span { font-size: clamp(24px, 2vw, 32px) !important; font-weight: 900; }
+.price-feat { font-size: clamp(14px, 1.2vw, 17px) !important; padding-left: 20px; }
+.price-card.popular { position: relative; border: 2px solid var(--blue); }
+.price-popular-badge { position: absolute; top: -14px; right: 24px; background: var(--blue); color: #fff; padding: 6px 14px; border-radius: 99px; font-size: 11px; font-weight: 900; letter-spacing: 1px; }
+.comp-grid.list-view .comp-rank { padding: 16px 24px; }
+.comp-grid.list-view .comp-rank-name { font-size: 18px !important; }
+.comp-grid.list-view .comp-rank-daily { font-size: 26px !important; }
+.tree-graphic { display: flex; flex-direction: column; align-items: center; gap: 20px; background: rgba(255,255,255,0.85); padding: 30px; border-radius: 24px; transition: all 0.3s ease; }
+.tree-graphic:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+.tree-top { font-size: 32px; font-weight: 900; color: var(--blue); margin-bottom: 5px; }
+.tree-split { display: flex; gap: 60px; position: relative; margin-top: 10px; }
+.tree-split::before { content: ""; position: absolute; top: -15px; left: 25%; right: 25%; height: 2px; background: var(--blue); }
+.tree-split::after { content: ""; position: absolute; top: -15px; left: 50%; width: 2px; height: 15px; background: var(--blue); }
+.tree-node { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.tree-icon { width: 80px; height: 80px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; }
+.tree-icon img { width: 100%; height: 100%; object-fit: contain; }
+.tree-node span { font-weight: 800; font-size: 20px; }
+.tree-pay { display: flex; gap: 40px; margin-top: 20px; background: var(--blue); color: white; padding: 20px 40px; border-radius: 20px; font-size: 24px; font-weight: 900; }
+.four-trees { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; align-items: start; width: calc(100% + 120px); margin: 0 -60px; }
+.four-trees .tree-graphic { padding: 20px 0; gap: 15px; width: 100%; min-height: 440px; display: flex; flex-direction: column; justify-content: space-between; }
+.four-trees .tree-top { font-size: 28px; margin: 0 10px 10px 10px; }
+.four-trees .tree-split { margin-top: 5px; gap: 15px; padding: 0 10px; }
+.four-trees .tree-split::before, .four-trees .tree-split::after { top: -10px; }
+.four-trees .tree-icon { font-size: 32px; width: 50px; height: 50px; }
+.four-trees .tree-node span { font-size: 17px; }
+.four-trees .tree-pay { align-self: stretch; width: auto; flex-direction: column; gap: 6px; font-size: 18px; padding: 15px; margin-top: 10px; border-radius: 0; }
+.full-table { width: 100%; border-collapse: collapse; font-size: 14px; background: rgba(255,255,255,0.9); border-radius: 16px; overflow: hidden; }
+.full-table th { background: var(--blue); color: white; padding: 12px; font-weight: 800; text-align: left; }
+.full-table td { padding: 12px; border-bottom: 1px solid rgba(0,0,0,0.1); font-weight: 700; color: var(--ink); }
+.full-table tr:last-child td { border-bottom: none; }
+.quote-box { margin: 20px auto; padding: 30px; border-left: 6px solid var(--blue); background: rgba(255,255,255,0.9); font-size: 20px; font-style: italic; font-weight: 700; max-width: 800px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-radius: 0 20px 20px 0; }
+
+/* Text outlines for better readability on light backgrounds */
+.company h1.title, .benefits-hero-content h1 {
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 10px 30px rgba(0,0,0,0.8) !important;
+}
+.company .eyebrow, .company .company-desc, .company .office-table td, 
+.benefits-hero-content .eyebrow, .benefits-hero-content p {
+    text-shadow: 1.5px 1.5px 0 rgba(0,0,0,0.8), -1.5px -1.5px 0 rgba(0,0,0,0.8), 1.5px -1.5px 0 rgba(0,0,0,0.8), -1.5px 1.5px 0 rgba(0,0,0,0.8), 0 4px 12px rgba(0,0,0,0.8) !important;
+}
+.benefits .benefit-label, .benefits .benefit-card p {
+    color: white !important;
+    text-shadow: 1.5px 1.5px 0 rgba(0,0,0,0.8), -1.5px -1.5px 0 rgba(0,0,0,0.8), 1.5px -1.5px 0 rgba(0,0,0,0.8), -1.5px 1.5px 0 rgba(0,0,0,0.8), 0 4px 12px rgba(0,0,0,0.8) !important;
+}
+.company h1.title .accent {
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 4px 12px rgba(0,0,0,0.8) !important;
+}
+/* Font size increases */
+.company .company-desc {
+    font-size: clamp(18px,1.8vw,22px) !important;
+    line-height: 1.6 !important;
+}
+
+.benefits-hero-content p {
+    font-size: clamp(18px, 1.8vw, 28px) !important;
+}
+
+
+
+/* Custom overrides for pricing slide to match reference */
+.pricing .price-card {
+    background: rgba(0,0,0,0.4) !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3) !important;
+    gap: 0 !important;
+    justify-content: flex-start !important;
+    padding: clamp(10px, 1.2vh, 16px) clamp(12px, 1vw, 16px) !important;
+    transition: transform .24s ease, box-shadow .24s ease !important;
+}
+.pricing .price-card:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.4) !important;
+}
+.pricing .price-name {
+    font-size: clamp(16px, 1.5vw, 18px) !important;
+    letter-spacing: 2px !important;
+    margin-bottom: 4px !important;
+    color: white !important;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+.pricing .price-value {
+    font-size: clamp(24px, 2.8vw, 36px) !important;
+    color: white !important;
+    margin-bottom: 2px !important;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+.pricing .price-freq {
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    color: #ff6b6b !important;
+    text-transform: uppercase !important;
+    margin-bottom: 8px !important;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+.pricing .price-monthly {
+    border-top: 1px solid rgba(255,255,255,0.2) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.2) !important;
+    padding: 8px 0 !important;
+    margin-bottom: 12px !important;
+    font-size: 15px !important;
+    color: white !important;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+.pricing .price-monthly span {
+    font-size: 24px !important;
+    color: #ff6b6b !important;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+.pricing .price-feat {
+    font-size: 15px !important;
+    margin-bottom: 8px !important;
+    color: white !important;
+    line-height: 1.2 !important;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+.pricing .price-feats {
+    margin-top: 0 !important;
+}
+.pricing .price-points {
+    border-top: 1px solid rgba(255,255,255,0.2) !important;
+    padding-top: 10px !important;
+    margin-top: auto !important;
+    text-align: center !important;
+    color: white !important;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+.pricing .price-points span {
+    color: #5bc0eb !important;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+.pricing .price-popular-badge {
+    top: -16px !important;
+    right: 20px !important;
+    background: #1479d4 !important;
+    font-size: 11px !important;
+    padding: 6px 14px !important;
+}
+.pricing .price-card.popular {
+    border: 3px solid #1479d4 !important;
+    transform: scale(1.03) !important;
+    z-index: 2 !important;
+}
+.pricing .price-card.popular:hover {
+    transform: scale(1.03) translateY(-8px) !important;
+}
+.pricing-wrap h1.title {
+    font-size: clamp(28px, 3.5vw, 54px) !important;
+    color: white !important;
+    text-transform: uppercase !important;
+    line-height: 1.1 !important;
+    margin-bottom: 0 !important;
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 10px 30px rgba(0,0,0,0.8) !important;
+}
+.pricing .sub {
+    margin-bottom: clamp(10px, 1.5vh, 20px) !important;
+}
+
+/* Partnership slide overrides */
+.partner-layout {
+    gap: clamp(40px, 6vw, 80px) !important;
+}
+
+.partnership h1.title {
+    color: white !important;
+    font-size: clamp(36px, 4vw, 56px) !important;
+    text-transform: none !important;
+    line-height: 1.1 !important;
+    margin-bottom: 20px !important;
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 10px 30px rgba(0,0,0,0.8) !important;
+}
+/* Referral Slide (Slide 7) */
+.referral-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    padding: 20vh 0 20vh clamp(20px, 4vw, 60px);
+    width: 70%;
+    position: relative;
+    z-index: 10;
+    transform: translateY(15px);
+}
+
+.referral-layout h1.title {
+    color: white !important;
+    font-size: clamp(32px, 4vw, 50px) !important;
+    font-weight: 900 !important;
+    line-height: 1.1 !important;
+    margin-bottom: 20px !important;
+    text-transform: uppercase !important;
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 10px 30px rgba(0,0,0,0.8) !important;
+}
+.referral-layout h1.title span {
+    color: #5bc0eb !important;
+}
+.referral-subtitle {
+    color: white !important;
+    font-size: clamp(22px, 2.2vw, 30px) !important;
+    font-weight: 600 !important;
+    margin-bottom: 30px !important;
+    text-transform: uppercase !important;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 4px 12px rgba(0,0,0,0.5) !important;
+}
+.referral-icons {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+.referral-icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    color: white !important;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 4px 12px rgba(0,0,0,0.5) !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+}
+.referral-icon-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.4);
+    border: 2px solid #5bc0eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #5bc0eb;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+.referral-banner {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: none;
+    border-radius: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    margin-top: 20px;
+    transform: translateY(-20px);
+}
+.referral-banner-icon {
+    font-size: 24px;
+    color: #5bc0eb;
+}
+.referral-banner-text {
+    color: white !important;
+    font-size: clamp(16px, 1.5vw, 18px) !important;
+    font-weight: 600 !important;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 4px 12px rgba(0,0,0,0.5) !important;
+    text-transform: uppercase !important;
+}
+
+/* Dreamcation Slide (Slide 8) */
+.dreamcation-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    padding-left: clamp(20px, 4vw, 60px);
+    margin-left: -70px;
+    width: 80%;
+    position: relative;
+    z-index: 10;
+}
+.dreamcation-layout h1.title {
+    color: white !important;
+    font-size: clamp(40px, 5vw, 80px) !important;
+    font-weight: 900 !important;
+    line-height: 1.05 !important;
+    margin-bottom: 15px !important;
+    text-transform: uppercase !important;
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 10px 30px rgba(0,0,0,0.8) !important;
+}
+.dreamcation-layout h1.title span.accent {
+    color: #5bc0eb !important;
+}
+.dreamcation-subtitle {
+    color: white !important;
+    font-size: clamp(18px, 1.8vw, 26px) !important;
+    font-weight: 700 !important;
+    margin-bottom: 40px !important;
+    max-width: 800px;
+    text-shadow: 1.5px 1.5px 0 rgba(0,0,0,0.8), -1.5px -1.5px 0 rgba(0,0,0,0.8), 1.5px -1.5px 0 rgba(0,0,0,0.8), -1.5px 1.5px 0 rgba(0,0,0,0.8), 0 4px 12px rgba(0,0,0,0.8) !important;
+}
+.dreamcation-metrics {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+.dreamcation-metric {
+    background: rgba(0,0,0,0.2) !important;
+    border: 1px solid rgba(239, 201, 106, 0.4) !important;
+    backdrop-filter: blur(10px) !important;
+    padding: 24px 32px !important;
+    border-radius: 20px !important;
+    min-width: 240px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+.dreamcation-metric:hover {
+    transform: translateY(-10px) !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important;
+    border-color: rgba(239, 201, 106, 0.8) !important;
+}
+.dreamcation-metric-value {
+    font-family: "Montserrat", sans-serif;
+    font-size: 48px !important;
+    font-weight: 900 !important;
+    color: white !important;
+    margin-bottom: 8px;
+    text-shadow: 1.5px 1.5px 0 rgba(0,0,0,0.8), -1.5px -1.5px 0 rgba(0,0,0,0.8), 1.5px -1.5px 0 rgba(0,0,0,0.8), -1.5px 1.5px 0 rgba(0,0,0,0.8) !important;
+}
+.dreamcation-metric-label {
+    color: white !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.8), -1px -1px 0 rgba(0,0,0,0.8), 1px -1px 0 rgba(0,0,0,0.8), -1px 1px 0 rgba(0,0,0,0.8) !important;
+}
+.dreamcation-badge {
+    background: linear-gradient(180deg, #FAD674 0%, #D8A53A 100%);
+    color: #000;
+    border-radius: 999px;
+    padding: 12px 32px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 900;
+    font-size: 18px;
+    text-transform: uppercase;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    border: 1px solid #FFEBAA;
+}
+.dreamcation-badge-icon {
+    width: 36px;
+    height: 36px;
+    background: #000;
+    color: #FAD674;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+.partnership .partner-desc {
+    color: white !important;
+    font-size: clamp(20px, 2vw, 26px) !important;
+    margin-bottom: 20px !important;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 4px 12px rgba(0,0,0,0.5) !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+}
+.partnership .partner-feats {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+    margin-bottom: 30px !important;
+}
+.partnership .partner-feat {
+    background: white !important;
+    color: black !important;
+    border-radius: 50px !important;
+    padding: 10px 16px !important;
+    font-size: 15px !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+    gap: 12px !important;
+}
+.partnership .partner-feat-icon {
+    background: none !important;
+    width: auto !important;
+    height: auto !important;
+    font-size: 20px !important;
+}
+.partnership .partner-cta {
+    background: #ffc107 !important;
+    color: black !important;
+    padding: 6px 24px 6px 6px !important;
+    border-radius: 50px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    font-size: 16px !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3) !important;
+    margin-top: 10px !important;
+}
+.partnership .partner-visual {
+    border: 4px solid white !important;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3) !important;
+    aspect-ratio: 1.2 / 1 !important;
+}
+</style>
+</head>
+<body>
+<div class="ambient-orb one"></div>
+<div class="ambient-orb two"></div>
+<main class="deck-shell">
+    <section class="presentation-frame" id="frame">
+        <div class="track" id="track"></div>
+    </section>
+    <nav class="nav-controls">
+        <button class="nav-btn" id="prevBtn" disabled><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <div class="slide-counter" id="counter">01 / 25</div>
+        <button class="nav-btn" id="nextBtn"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+        <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="ru">RU</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+    </nav>
+</main>
+<script>
+let curLang = 'ru';
+const GLOBAL_TEXTS = {
+    ru: { monthly: "Ежемесячно:", retail: "РОЗНИЦА:", our: "НАША ЦЕНА:", once: "единовременно", tax: "налог", total: "ИТОГО" },
+    en: { monthly: "Monthly:", retail: "RETAIL:", our: "OUR PRICE:", once: "once", tax: "tax", total: "TOTAL" },
+    es: { monthly: "Mensual:", retail: "MINORISTA:", our: "NUESTRO PRECIO:", once: "pago único", tax: "impuesto", total: "TOTAL" }
+};
+const SLIDES_RU=[
+{type:"cover",bg:"data/img_454080583447217438.jpg",title:"TRAVORIUM",subtitle:"<div class='gold-divider'><div class='line'></div><div class='diamond'></div><div class='line'></div></div><span class='outlined-text' style='font-size:36px; font-weight: 800; display:block; margin-bottom: 30px;'>Путешествуйте больше, путешествуйте лучше,<br>путешествуйте выгоднее.</span><div class='gold-badge' style='margin: 0 auto;'><div class='gold-badge-icon'>✈️</div>КОМПАНИЯ, КОТОРАЯ СДЕЛАЕТ ВАШУ ЖИЗНЬ ЛУЧШЕ</div>", outlined: true},
+{type:"company",bg:"data/img_208638445521187983.jpg",eyebrow:"КОМПАНИЯ",title:'ОСНОВАНА В МАРТЕ 2013 ГОДА В США. <span class="accent">ВТОРОЕ ДЕСЯТИЛЕТИЕ БИЗНЕСА</span>',metrics:[{v:"70+",l:"Странах на 7 континентах"},{v:"33 000+",l:"Новых клиентов в 2024 году"}],offices:[["ГЛАВНЫЙ ОФИС","Темекула, Калифорния (США)"],["ЕЩЕ ОФИСЫ","Мадрид (Испания) <br> Алматы (Казахстан)"]],desc:"Компания, специализирующаяся на привлечении клиентов.<br>Миллионы продаж за последние 2 года. Постоянный рост.",ceo:{img:"data/Screenshot 2026-02-28 at 10.03.27.png",name:"Дэвид Харт",role:"Генеральный директор и основатель"}},
+{type:"benefits",bg:"data/bbf0a238847940cf860de3d2ce6f7028_img.jpg",eyebrow:"ПРЕИМУЩЕСТВА",title:"Что такое<br>Травориум?",heroText:"Уникальная платформа для путешествий и бизнеса, объединяющая лучшие предложения для отдыха с возможностью пассивного дохода.",cards:[{icon:"💎",label:"БАЛЛЫ",text:"Накопление туристических баллов и немедленное их использование"},{icon:"💰",label:"ЭКОНОМИЯ",text:"Бронируйте путешествия по ценам турагента: экономия до 60%"},{icon:"🔄",label:"КЭШБЕК",text:"Возврат 3% от расходов в виде туристических баллов лояльности"},{icon:"📅",label:"ОТПУСК",text:"Получение 2 отпусков каждые 12–14 месяцев (пакет «Платина»)"},{icon:"📈",label:"ДОХОД",text:"Зарабатывание денег 24/7 из любой точки мира — пассивный доход"},{icon:"💼",label:"БИЗНЕС",text:"Туристическое партнёрство и уникальная возможность для бизнеса"}]},
+{type:"services",bg:"data/GettyImages_482194715-56a1329e5f9b58b7d0bcf666.jpg",darkenClass:"darken-10",title:"Услуги, которые вы найдёте на наших платформах",items:[{name:"Курорты",img:"data/img_5240321833192847864.jpg"},{name:"Отели",img:"data/img_7558621548641612647.jpg"},{name:"Круизы",img:"data/img_1309808596405448921.jpg"},{name:"Аренда",img:"data/img_8313823004469536246.jpg"},{name:"Парки",img:"data/img_7969959102442128070.jpg"},{name:"Туры",img:"data/img_5351414371591150961.jpg"},{name:"Активности",img:"data/img_6291367685573576010.jpg"},{name:"Развлечения",img:"data/img_5678895211388458028.jpg"}]},
+{type:"pricing",bg:"data/dji_20240509142527_0247_d.jpg",eyebrow:"",title:"ВЫБЕРИТЕ СВОЙ<br>ПАКЕТ ПАРТНЁРСТВА",sub:"<div class='gold-divider' style='margin: 10px auto 15px; width: 60%; max-width: 500px;'><div class='line'></div><div class='diamond'></div><div class='line'></div></div><div class='outlined-text' style='color: white; font-size: 18px; font-weight: 800; margin-bottom: 10px;'>Нет контракта</div>",plans:[{name:"Серебро",price:"$69.95",monthly:"<span style='font-size:18px; font-weight:900;'>$52.50</span>",points:"<span style='font-size:18px; font-weight:900;'>Отсутствие туристических баллов</span>",feats:["Travel Site — лучше тарифов турагентов","Отели, рент машин, круизы, развлечения"]},{name:"Титан",price:"$149.95",monthly:"<span style='font-size:18px; font-weight:900;'>$75.00</span>",points:"<span style='font-size:18px; font-weight:900;'>150 туристических баллов в месяц</span>",feats:["Travel Site — лучше тарифов турагентов","World Tours — скидки до 50%","Getaways (Отдых) — скидки до 50%"]},{name:"Платина",price:"$269.95",monthly:"<span style='font-size:18px; font-weight:900;'>$135.00</span>",points:"<span style='font-size:18px; font-weight:900;'>270 туристических баллов в месяц</span>",feats:["Travel Site — лучше тарифов турагентов","World Tours — скидки до 80%","Getaways (Отдых) — скидки до 80%"], badge:"САМЫЙ ПОПУЛЯРНЫЙ"}]},
+{type:"partnership",bg:"data/img_9011175918394987006.jpg",eyebrow:"ПАРТНЁРСТВО",title:'СТАНЬТЕ НЕЗАВИСИМЫМ<br><span style="color: #5bc0eb; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;">ВЛАДЕЛЬЦЕМ БИЗНЕСА</span>',desc:"Бизнес под ключ — всё, что нужно для старта,<br>уже включено в ваш пакет партнёрства.",price_val:"$99.95 ЕЖЕГОДНО",feats:[{icon:"🌐",text:"Веб-сайт"},{icon:"📊",text:"Бэк-офис"},{icon:"🎬",text:"Маркетинговое видео"},{icon:"📚",text:"Обучение"},{icon:"🔑",text:"Бизнес под ключ"},{icon:"💰",text:"Налоговые преимущества"}],visual:"data/_D0_B2_D1_81_D1_82_D1_80_D0_B5_D1_87_D0_B0-_D1_81-_D1_83_D1_81_D0_BF_D0_B5_D1_85_D0_BE_D0__5.jpg"},
+{type:"referral",bg:"data/slide7_bg.png",eyebrow:"РЕФЕРАЛЬНАЯ ПРОГРАММА",title:"ЗАРЕГИСТРИРУЙТЕ<br>3Х ПАРТНЁРОВ<br><span>С ПАКЕТОМ ПЛАТИНА</span>",subtitle:"И ЗАРАБАТЫВАЙТЕ СТОЛЬКО,<br>СКОЛЬКО ТРАТИТЕ",icons:[{icon:"<svg viewBox='0 0 24 24' width='28' height='28' stroke='currentColor' stroke-width='2' fill='none'><circle cx='12' cy='12' r='10'></circle><path d='M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'></path></svg>",text:"БИЗНЕС<br>БЕЗ ГРАНИЦ"},{icon:"<svg viewBox='0 0 24 24' width='30' height='30' stroke='currentColor' stroke-width='2' fill='none' stroke-linejoin='round' stroke-linecap='round'><path d='M2.5 19h19l-1.5-12.5L16 11l-4-7-4 7-4-4.5z'></path></svg>",text:"ДОХОД<br>БЕЗ ПОТОЛКА"},{icon:"<svg viewBox='0 0 24 24' width='28' height='28' stroke='currentColor' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'></path><circle cx='9' cy='7' r='4'></circle><path d='M23 21v-2a4 4 0 0 0-3-3.87'></path><path d='M16 3.13a4 4 0 0 1 0 7.75'></path></svg>",text:"СИЛА<br>ПАРТНЁРСТВА"}],bannerText:"СТРОЙТЕ СВОЁ БУДУЩЕЕ ВМЕСТЕ С КОМАНДОЙ,<br>ГДЕ КАЖДЫЙ УСПЕХ — ОБЩИЙ"},
+{type:"dreamcation",bg:"data/tmb_41776_8528.jpg",title:"ОТДЫХ (GETAWAYS)<br><span class='accent'>DREAMCATION</span>",subtitle:"Платформа мечты — более 2000 курортов.<br>Используйте свои баллы и вперёд!",metrics:[{v:"2000+",l:"Курортов по всему миру"},{v:"100+",l:"Стран для отдыха"}]},
+{type:"dest",bg:"data/img_8090252620003835094.jpg",eyebrow:"",title:"ОТДЫХ (GETAWAY)",sub:"ПЛАТФОРМА МЕЧТЫ DREAMCATION",dests:[{name:"Канарские острова, Испания",detail:"8 дней / 7 ночей · Студия",retail:"$899",our:"$7.00 +налог",img:"data/img_5015707547061959736.jpg"},{name:"Кабо Сан-Лукас, Мексика",detail:"8 дней / 7 ночей · Люкс 1 спальня",retail:"$1,299",our:"$149.00 +налог",img:"data/img_3522254584554222769.jpg"},{name:"Орландо, Флорида",detail:"8 дней / 7 ночей · Люкс 2 спальни",retail:"$1,149",our:"$142.00 +налог",img:"data/376-1686902224-orl_neighbourhood2_hero1_gettyimages-1368286102-scaled.jpeg"}]},
+{type:"cover",bg:"data/img_6781713265647315434.jpg",title:"<span style='color: #5bc0eb; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 10px 30px rgba(0,0,0,0.8);'>WORLD TOURS</span>",subtitle:"<span class='outlined-text' style='color: white; font-size: 28px; font-weight: 800;'>Мировые туры — 100+ направлений в ближайшие 18 месяцев. Куда ты хочешь поехать?</span>",badge_top:"<span style='font-size:36px; font-weight:900; color: white; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000; display:block; margin-bottom: 10px; background: none; border: none; padding: 0;'>МИР ЖДЁТ ТЕБЯ</span>", outlined: false, plainBadge: true},
+{type:"dest",bg:"data/montego-bay.jpg",eyebrow:"",title:"МИРОВЫЕ ТУРЫ (WORLD TOURS)",sub:"ПУТЕШЕСТВИЯ ПО ВСЕМУ МИРУ",dests:[{name:"Венеция, Италия",detail:"5 дней · Завтрак · Экскурсия",retail:"$1,110",our:"$239.00 +налог",img:"data/img_1686101133334832249.jpg"},{name:"Дубай, ОАЭ",detail:"7 дней · Отель 4★ · Завтраки ежедневно",retail:"$799",our:"$1.00 +налог",img:"data/img_4198718179172709250.jpg"},{name:"Монтего-Бэй, Ямайка",detail:"5 дней · Курорт 5★ · Всё включено",retail:"$1,716",our:"$579.00 +налог",img:"https://www.cruiseandtravel.co.uk/_gatsby/file/386bfa344995c96c89b897cce07b3f3e/93147_Doctors-Cave-Montego-Bay-Jamaica-CO-LeongShutterstock-shutterstock_16337890.jpg"}]},
+{type:"dest",bg:"data/img_3445845404363460163.jpg",eyebrow:"",title:"МИРОВЫЕ ТУРЫ (WORLD TOURS)",sub:"ПУТЕШЕСТВИЯ ПО ВСЕМУ МИРУ",dests:[{name:"Лас-Вегас, США",detail:"5 дней / 4 ночи · Отель 5★",retail:"$750",our:"$19.00 +налог",img:"data/img_138279401203284683.jpg"},{name:"Гавайи, США",detail:"5 дней / 4 ночи · Отель 5★ · Завтрак",retail:"$1,530",our:"$399.00 +налог",img:"data/img_5433379921170526037.jpg"},{name:"Нью-Йорк, США",detail:"5 дней / 4 ночи · Отель 5★",retail:"$1,856",our:"$499.00 +налог",img:"data/img_8305500492132403973.jpg"}]},
+{type:"travelsite",bg:"data/68889-karibskij_bassejn-gorizont-nebo-komnata-okean-x750.jpg",
+    title: "Травориум Travel Site<br><span style='color:#5bc0eb;'>ПРОТИВ РОЗНИЧНЫХ ТАРИФОВ</span>",
+    subtitle: "Экономьте <span style='color:#5bc0eb;'>до 60%</span> на путешествиях. Более 2 000 000 отелей и<br>курортов по тарифам лучше, чем у турагентов.",
+    cards:[
+    {t:"ОТЕЛИ",icon:`<svg viewBox="0 0 24 24" width="28" height="28" stroke="#5bc0eb" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4"></path><path d="M5 21V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v15"></path><path d="M9 4V2"></path><path d="M15 4V2"></path></svg>`,img:"data/img_5240321833192847864.jpg",d:"Лучше тарифов турагентов"},
+    {t:"КРУИЗЫ",icon:`<svg viewBox="0 0 24 24" width="28" height="28" stroke="#5bc0eb" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path><path d="M19.38 20L21 7l-9.5 4-3.5-3.8L3 13l1.62 7"></path></svg>`,img:"data/img_1309808596405448921.jpg",d:"Эксклюзивные предложения"},
+    {t:"АРЕНДА МАШИН",icon:`<svg viewBox="0 0 24 24" width="28" height="28" stroke="#5bc0eb" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="10" width="22" height="8" rx="2"></rect><path d="M7 10l3-6h4l3 6"></path><circle cx="7" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle></svg>`,img:"data/img_8313823004469536246.jpg",d:"Выгодные тарифы"},
+    {t:"АКТИВНОСТЬ",icon:`<svg viewBox="0 0 24 24" width="28" height="28" stroke="#5bc0eb" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20a6 6 0 0 0-12 0"></path><circle cx="12" cy="10" r="4"></circle><circle cx="12" cy="3" r="1"></circle></svg>`,img:"data/img_5678895211388458028.jpg",d:"Экскурсии и развлечения"}
+]},
+{type:"comparison",bg:"data/img_8709530173457480459.jpg", showFeatures: true, eyebrow: "СРАВНИТЕ И УБЕДИТЕСЬ", title: "РЕАЛЬНАЯ<br>ЭКОНОМИЯ<br><span style='color:#5bc0eb;'>С TRAVEL SITE</span>", body: "Убедитесь сами: TRAVEL SITE предлагает лучшие условия и реальные выгоды, которые сделают ваше путешествие незабываемым.", features: [{icon: "💰", title: "НИЖЕ ЦЕНА", desc: "Экономия до 60%"}, {icon: "🎁", title: "БОНУСЫ", desc: "Кэшбэк и скидки"}, {icon: "💎", title: "ВЫГОДА", desc: "Баллы лояльности"}]},
+{type:"comparison",bg:"data/img_8709530173457480459.jpg", showFeatures: false, eyebrow: "",
+    title: "ЛУЧШИЕ<br>ТАРИФЫ<br><span style='color:#5bc0eb;'>TRAVEL SITE</span>", 
+    body: "Большие скидки TRAVEL SITE против розничных тарифов мировых агрегаторов.",
+    images: [
+        {src: "data/293.jpg", price: "$293.58", label: "EXPEDIA", isTrav: false},
+        {src: "data/277.jpg", price: "$277.74", label: "BOOKING", isTrav: false},
+        {src: "data/15.png", price: "$15.46", label: "TRAVORIUM", isTrav: true}
+    ]
+},
+{type:"cover",bg:"data/347775590118319.jpeg",title:"<span style='font-size:0.85em; color:#5bc0eb; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 0 10px 20px rgba(0,0,0,0.8);'>КОМПЕНСАЦИЯ</span>",subtitle:"<div class='gold-divider'><div class='line'></div><div class='diamond'></div><div class='line'></div></div><span class='outlined-text' style='font-size:32px; font-weight: 800; display:block; margin-bottom: 30px;'>Зарабатывайте деньги, показывая другим,<br>как сэкономить на путешествиях.</span><div class='gold-badge' style='margin: 0 auto;'>СТАТЬ ПАРТНЁРОМ TRAVORIUM</div>", outlined: false, fullDark: true},
+{type:"industry",bg:"data/Depositphotos_212067780_s-2019-min.jpg",
+    quote: "«Если вы не найдете способ зарабатывать деньги, пока вы спите, вы будете работать, пока не умрете»",
+    author: "Уоррен Баффет",
+    menu: ["РЫНОК", "ВРЕМЯ", "ВЫГОДА"],
+    visual: "data/industry_visual.png",
+    title: "ИНДУСТРИЯ",
+    bullets: [
+        "ПО ИНФОРМАЦИИ «БЛУМБЕРГ»: ТУРИЗМ — ЭТО ИНДУСТРИЯ В <span style='color:#EFC96A; font-weight:900;'>10 ТРИЛЛИОНОВ</span> ДОЛЛАРОВ, И ПО ИХ ОЦЕНКЕ, ДО <span style='color:#EFC96A; font-weight:900;'>2033 ГОДА</span> ОНА ДОСТИГНЕТ <span style='color:#EFC96A; font-weight:900;'>15,5 ТРИЛЛИОНОВ</span> ДОЛЛАРОВ",
+        "БИЗНЕС МЕЧТЫ",
+        "ЛЕГКО ОБЪЯСНИТЬ И ИНТЕРЕСНО ДЕЛАТЬ",
+        "ДОМАШНИЙ БИЗНЕС"
+    ]
+},
+{type:"businessmodel",bg:"https://i0.wp.com/theluxurytravelexpert.com/wp-content/uploads/2023/11/ONEONLY-LE-SAINT-GERAN-MAURITIUS.jpg?fit=1280%2C720&ssl=1",
+    eyebrow: "БИЗНЕС-МОДЕЛЬ",
+    title: "ЧЕМ МЫ <span style='color:#5bc0eb;'>ОТЛИЧАЕМСЯ?</span>",
+    comparison: [
+        {left: "Priceline, Hotels, Expedia, Booking...", center: "<span style='text-decoration: line-through; color: #ff4d4d;'>СМИ & Интернет-Маркетинг</span>", right: "Клиенты", active: false},
+        {left: "TRAVORIUM", center: "ВЫ (Партнёр) 💰", right: "Клиенты", active: true}
+    ],
+    features: [
+        {icon: "🌐", title: "БЕЗ СМИ И РЕКЛАМЫ", desc: "Мы не тратим деньги на рекламу — а значит, вы зарабатываете больше."},
+        {icon: "📊", title: "ПАССИВНЫЙ ДОХОД", desc: "Создайте один раз — и получайте доход снова и снова с каждого бронирования."},
+        {icon: "🛡️", title: "ПРОЗРАЧНО И ВЫГОДНО", desc: "Вы напрямую получаете выгоду от клиентов, без посредников и скрытых комиссий."}
+    ]
+},
+{type:"comptable",bg:"https://i0.wp.com/theluxurytravelexpert.com/wp-content/uploads/2023/11/ONEONLY-LE-SAINT-GERAN-MAURITIUS.jpg?fit=1280%2C720&ssl=1",eyebrow:"КОМПЕНСАЦИОННЫЙ ПЛАН",title:"ВАШ ПУТЬ К ЛИДЕРСТВУ <span style='color:#5bc0eb;'>И ФИНАНСОВОЙ СВОБОДЕ</span>",sub:"Только для иллюстрации. Результаты могут отличаться.", ranks:[
+    {name: "ПЛАТИНОВЫЙ ДИРЕКТОР", lpp: "3", left: "1", right: "2", daily: "$4.45", monthly: "$135", bonus: "$150", annual: "$1,620"},
+    {name: "ДИРЕКТОР – 1 ЗВЕЗДА", lpp: "4", left: "8", right: "8", daily: "$10", monthly: "$300 - $400", bonus: "+$10", annual: "$4,800"},
+    {name: "ДИРЕКТОР – 2 ЗВЕЗДЫ", lpp: "5", left: "25", right: "25", daily: "$25", monthly: "$750 - $1,500", bonus: "+$20", annual: "$18,000"},
+    {name: "ДИРЕКТОР – 3 ЗВЕЗДЫ", lpp: "7", left: "63", right: "63", daily: "$70", monthly: "$2,100 - $2,400", bonus: "+$30", annual: "$28,800"},
+    {name: "ДИРЕКТОР – 4 ЗВЕЗДЫ", lpp: "9", left: "125", right: "125", daily: "$100", monthly: "$3,100 - $3,500", bonus: "+$40", annual: "$42,000"},
+    {name: "АМБАССАДОР", lpp: "10", left: "188", right: "188", daily: "$140", monthly: "$4,340 - $10,460", bonus: "+$50", annual: "$80,000 - $100,000", highlight: true}
+]},
+{type:"generic",bg:"data/img_8232451684165173779.jpg",darken:40,eyebrow:"",title:'<span style="color:#5bc0eb; font-size:60px; font-weight:900; text-transform:uppercase; text-shadow: 2.5px 2.5px 0 #000, -2.5px -2.5px 0 #000, 2.5px -2.5px 0 #000, -2.5px 2.5px 0 #000, 0 10px 30px rgba(0,0,0,0.8);">Стиль жизни Амбассадора</span>',body:`
+<div class='tree-graphic'>
+    <div class='tree-top' style='font-size:40px; font-weight:900; color:#EFC96A; text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000;'>АМБАССАДОР</div>
+    <div class='tree-split'>
+        <div class='tree-node'><div class='tree-icon'><img src="data/3048124.png"></div><span>188 ПАРТНЕРОВ<br>СЛЕВА</span></div>
+        <div class='tree-node'><div class='tree-icon'><img src="data/9092388.png"></div><span>188 ПАРТНЕРОВ<br>СПРАВА</span></div>
+    </div>
+    <div class='tree-pay'>
+        <div>Ежедневно: $140</div>
+        <div>Ежемесячно: $4,200 – $12,000</div>
+    </div>
+    <div style='font-size:20px; font-weight:800; color:var(--ink-soft); display:flex; gap:20px; margin-top:10px;'>
+        <span>🌴 Ежегодный отпуск</span>
+        <span>🌍 Глобальные бонусы</span>
+        <span>💼 1 Акция Амбассадора</span>
+        <span>👜 Подарок от Louis Vuitton</span>
+    </div>
+</div>
+`},
+{type:"comptable",bg:"https://i0.wp.com/theluxurytravelexpert.com/wp-content/uploads/2023/11/ONEONLY-LE-SAINT-GERAN-MAURITIUS.jpg?fit=1280%2C720&ssl=1",eyebrow:"КОМПЕНСАЦИОННЫЙ ПЛАН",title:"ПУТЬ К ВЫСШИМ ДОСТИЖЕНИЯМ <span style='color:#5bc0eb;'>БЕЗ ГРАНИЦ</span>",sub:"Только для иллюстрации. Результаты могут отличаться.", headers: ["АМБАССАДОРЫ", "ЛПП", "ЛЕВАЯ СТОРОНА", "ПРАВАЯ СТОРОНА", "ЕЖЕДНЕВНО", "ЕЖЕМЕСЯЧНО", "БОНУС", "ЕЖЕГОДНО"], ranks:[
+    {name: "АМБАССАДОР", lpp: "9", left: "188", right: "188", daily: "$140", monthly: "$8,500 - $11,000", bonus: "+$50", annual: "$100,000+"},
+    {name: "АМБАССАДОР 1★", lpp: "9", left: "376", right: "376", daily: "$225", monthly: "$11,500 - $14,000", bonus: "+$60", annual: "$150,000+"},
+    {name: "АМБАССАДОР 2★", lpp: "9", left: "750", right: "750", daily: "$300", monthly: "$18,000 - $21,500", bonus: "+$60", annual: "$200,000+"},
+    {name: "АМБАССАДОР 3★", lpp: "9", left: "1250", right: "1250", daily: "$400", monthly: "$21,000 - $26,000", bonus: "+$60", annual: "$250,000+"},
+    {name: "АМБАССАДОР 4★", lpp: "9", left: "2500", right: "2500", daily: "$600", monthly: "$30,000 - $35,000", bonus: "+$60", annual: "$360,000+"},
+    {name: "АМБАССАДОР 5★", lpp: "9", left: "3750", right: "3750", daily: "$800", monthly: "$38,000 - $42,000", bonus: "+$60", annual: "$450,000+"}
+]},
+{type:"generic",bg:"data/img_8232451684165173779.jpg",darken:40,eyebrow:"",title:'<span style="color:#5bc0eb; font-size:60px; font-weight:900; text-transform:uppercase; text-shadow: 2.5px 2.5px 0 #000, -2.5px -2.5px 0 #000, 2.5px -2.5px 0 #000, -2.5px 2.5px 0 #000, 0 10px 30px rgba(0,0,0,0.8);">Пассивный доход</span>',body:`
+<div class='tree-graphic'>
+    <div class='tree-top' style='font-size:38px; font-weight:900; color:#EFC96A; text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000;'>ПЛАТИНОВЫЙ ДИРЕКТОР</div>
+    <div class='tree-split'>
+        <div class='tree-node'><div class='tree-icon'><img src="data/3048124.png"></div><span>1 ПАРТНЕР<br>СЛЕВА</span></div>
+        <div class='tree-node'><div class='tree-icon'><img src="data/9092388.png"></div><span>2 ПАРТНЕРА<br>СПРАВА</span></div>
+    </div>
+    <div class='tree-pay'>
+        <div>Ежедневно: $4.45</div>
+        <div>Ежемесячно: $137</div>
+    </div>
+    <div style='margin-top:10px;'>
+        <div style='color: black; font-weight: 900; font-size: 24px; text-transform: uppercase; font-family: "Montserrat", sans-serif;'>3 ПЕРСОНАЛЬНЫХ ПАРТНЕРА = БЕСПЛАТНОЕ ЧЛЕНСТВО</div>
+    </div>
+</div>
+`},
+{type:"generic",bg:"data/1280px-Lights_of_Rockefeller_Center_during_sunset.jpg",darken:50,eyebrow:"",title:'<span style="color:#5bc0eb; font-size:60px; font-weight:900; text-transform:uppercase; text-shadow: 2.5px 2.5px 0 #000, -2.5px -2.5px 0 #000, 2.5px -2.5px 0 #000, -2.5px 2.5px 0 #000, 0 10px 30px rgba(0,0,0,0.8);">Компенсационный план</span>',body:`
+<div class='four-trees'>
+    <div class='tree-graphic'>
+        <div class='tree-top' style='color:#EFC96A; font-weight:900; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;'>ДИРЕКТОР 1★</div>
+        <div class='tree-split'>
+            <div class='tree-node'><div class='tree-icon'><img src="data/3048124.png"></div><span>8 ПАРТНЕРОВ<br>СЛЕВА</span></div>
+            <div class='tree-node'><div class='tree-icon'><img src="data/9092388.png"></div><span>8 ПАРТНЕРОВ<br>СПРАВА</span></div>
+        </div>
+        <div class='tree-pay'>
+            <div>Ежедневно: $10</div>
+            <div>Ежемесячно: $300-$700</div>
+            <div style='border-top:1px solid rgba(255,255,255,0.2); padding-top:4px; margin-top:4px;'>Ежегодно: $3,600-$8,000</div>
+        </div>
+    </div>
+    <div class='tree-graphic'>
+        <div class='tree-top' style='color:#EFC96A; font-weight:900; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;'>ДИРЕКТОР 2★</div>
+        <div class='tree-split'>
+            <div class='tree-node'><div class='tree-icon'><img src="data/3048124.png"></div><span>25 ПАРТНЕРОВ<br>СЛЕВА</span></div>
+            <div class='tree-node'><div class='tree-icon'><img src="data/9092388.png"></div><span>25 ПАРТНЕРОВ<br>СПРАВА</span></div>
+        </div>
+        <div class='tree-pay'>
+            <div>Ежедневно: $25</div>
+            <div>Ежемесячно: $750-$2,000</div>
+            <div style='border-top:1px solid rgba(255,255,255,0.2); padding-top:4px; margin-top:4px;'>Ежегодно: $9,000-$24,000</div>
+        </div>
+    </div>
+    <div class='tree-graphic'>
+        <div class='tree-top' style='color:#EFC96A; font-weight:900; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;'>ДИРЕКТОР 3★</div>
+        <div class='tree-split'>
+            <div class='tree-node'><div class='tree-icon'><img src="data/3048124.png"></div><span>63 ПАРТНЕРА<br>СЛЕВА</span></div>
+            <div class='tree-node'><div class='tree-icon'><img src="data/9092388.png"></div><span>63 ПАРТНЕРА<br>СПРАВА</span></div>
+        </div>
+        <div class='tree-pay'>
+            <div>Ежедневно: $70</div>
+            <div>Ежемесячно: $2,100-$3,000</div>
+            <div style='border-top:1px solid rgba(255,255,255,0.2); padding-top:4px; margin-top:4px;'>Ежегодно: $25,000-$36,000</div>
+        </div>
+    </div>
+    <div class='tree-graphic'>
+        <div class='tree-top' style='color:#EFC96A; font-weight:900; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;'>ДИРЕКТОР 4★</div>
+        <div class='tree-split'>
+            <div class='tree-node'><div class='tree-icon'><img src="data/3048124.png"></div><span>125 ПАРТНЕРОВ<br>СЛЕВА</span></div>
+            <div class='tree-node'><div class='tree-icon'><img src="data/9092388.png"></div><span>125 ПАРТНЕРОВ<br>СПРАВА</span></div>
+        </div>
+        <div class='tree-pay'>
+            <div>Ежедневно: $100</div>
+            <div>Ежемесячно: $3,100-$4,000</div>
+            <div style='border-top:1px solid rgba(255,255,255,0.2); padding-top:4px; margin-top:4px;'>Ежегодно: $36,000-$48,000</div>
+        </div>
+    </div>
+</div>
+`},
+{type:"cover",bg:"data/TAL-turquoise-blue-tropical-water-WHYTURQ0323-741b0f8d4d8849f38f10a96ebef6c8d5.jpg",title:"TRAVORIUM",subtitle:"<div class='gold-divider'><div class='line'></div><div class='diamond'></div><div class='line'></div></div><span class='outlined-text' style='font-size:30px; font-weight: 800; display:block; margin-bottom: 30px;'>Свяжитесь с человеком, который вас пригласил, и узнайте, как стать партнёром нашей компании!<br>А мы научим вас всем стратегиям, которые необходимы для вашего успеха!</span><div class='gold-badge' style='margin: 0 auto;'>КОМПАНИЯ ДЛЯ ЛУЧШЕЙ ЖИЗНИ</div>", outlined: true, darkenClass: 'bottom-dark-70'},
+{type:"cover",bg:"data/shutterstock_444622738.jpg",title:"TRAVORIUM",subtitle:"<div class='gold-divider'><div class='line'></div><div class='diamond'></div><div class='line'></div></div><span class='outlined-text' style='font-size:36px; font-weight: 800; display:block; margin-bottom: 30px;'>Путешествуйте больше. Путешествуйте лучше.</span><div class='gold-badge' style='margin: 0 auto;'>СПАСИБО ЗА ВНИМАНИЕ!</div>", outlined: true, darkenClass: 'bottom-dark-70'}
+];
+const SLIDES_EN=[
+{type:"cover",bg:"data/img_454080583447217438.jpg",title:"TRAVORIUM",subtitle:"<div class='gold-divider'><div class='line'></div><div class='diamond'></div><div class='line'></div></div><span class='outlined-text' style='font-size:36px; font-weight: 800; display:block; margin-bottom: 30px;'>Travel more, travel better,<br>travel more profitably.</span><div class='gold-badge' style='margin: 0 auto;'><div class='gold-badge-icon'>✈️</div>A COMPANY THAT WILL MAKE YOUR LIFE BETTER</div>", outlined: true},
+{type:"company",bg:"data/img_208638445521187983.jpg",eyebrow:"COMPANY",title:'FOUNDED IN MARCH 2013 IN THE USA. <span class="accent">SECOND DECADE OF BUSINESS</span>',metrics:[{v:"70+",l:"Countries on 7 continents"},{v:"33 000+",l:"New customers in 2024"}],offices:[["HEAD OFFICE","Temecula, California (USA)"],["MORE OFFICES","Madrid (Spain) <br> Almaty (Kazakhstan)"]],desc:"A company specializing in customer acquisition.<br>Millions of sales in the last 2 years. Constant growth.",ceo:{img:"data/Screenshot 2026-02-28 at 10.03.27.png",name:"David Hart",role:"CEO and Founder"}},
+{type:"benefits",bg:"data/bbf0a238847940cf860de3d2ce6f7028_img.jpg",eyebrow:"BENEFITS",title:"What is<br>Travorium?",heroText:"A unique travel and business platform that combines the best vacation offers with passive income opportunities.",cards:[{icon:"💎",label:"POINTS",text:"Accumulate travel points and use them immediately"},{icon:"💰",label:"SAVINGS",text:"Book travel at travel agent prices: savings up to 60%"},{icon:"🔄",label:"CASHBACK",text:"3% return on expenses in the form of travel loyalty points"},{icon:"📅",label:"VACATION",text:"Get 2 vacations every 12–14 months (Platinum package)"},{icon:"📈",label:"INCOME",text:"Earning money 24/7 from anywhere in the world — passive income"},{icon:"💼",label:"BUSINESS",text:"Travel partnership and a unique business opportunity"}]},
+{type:"services",bg:"data/GettyImages_482194715-56a1329e5f9b58b7d0bcf666.jpg",darkenClass:"darken-10",title:"Services you will find on our platforms",items:[{name:"Resorts",img:"data/img_5240321833192847864.jpg"},{name:"Hotels",img:"data/img_7558621548641612647.jpg"},{name:"Cruises",img:"data/img_1309808596405448921.jpg"},{name:"Rentals",img:"data/img_8313823004469536246.jpg"},{name:"Parks",img:"data/img_7969959102442128070.jpg"},{name:"Tours",img:"data/img_5351414371591150961.jpg"},{name:"Activities",img:"data/img_6291367685573576010.jpg"},{name:"Entertainment",img:"data/img_5678895211388458028.jpg"}]},
+{type:"pricing",bg:"data/dji_20240509142527_0247_d.jpg",eyebrow:"",title:"CHOOSE YOUR<br>PARTNERSHIP PACKAGE",sub:"<div class='gold-divider' style='margin: 10px auto 15px; width: 60%; max-width: 500px;'><div class='line'></div><div class='diamond'></div><div class='line'></div></div><div class='outlined-text' style='color: white; font-size: 18px; font-weight: 800; margin-bottom: 10px;'>No contract</div>",plans:[{name:"Silver",price:"$69.95",monthly:"<span style='font-size:18px; font-weight:900;'>$52.50</span>",points:"<span style='font-size:18px; font-weight:900;'>No travel points</span>",feats:["Travel Site — better than travel agent rates","Hotels, car rentals, cruises, entertainment"]},{name:"Titanium",price:"$149.95",monthly:"<span style='font-size:18px; font-weight:900;'>$75.00</span>",points:"<span style='font-size:18px; font-weight:900;'>150 travel points per month</span>",feats:["Travel Site — better than travel agent rates","World Tours — up to 50% discounts","Getaways — up to 50% discounts"]},{name:"Platinum",price:"$269.95",monthly:"<span style='font-size:18px; font-weight:900;'>$135.00</span>",points:"<span style='font-size:18px; font-weight:900;'>270 travel points per month</span>",feats:["Travel Site — better than travel agent rates","World Tours — up to 80% discounts","Getaways — up to 80% discounts"], badge:"MOST POPULAR"}]},
+{type:"partnership",bg:"data/img_9011175918394987006.jpg",eyebrow:"PARTNERSHIP",title:'BECOME AN INDEPENDENT<br><span style="color: #5bc0eb; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;">BUSINESS OWNER</span>',desc:"Turnkey business — everything you need to start is already included in your partnership package.",price_val:"$99.95 ANNUALLY",feats:[{icon:"🌐",text:"Website"},{icon:"📊",text:"Back Office"},{icon:"🎬",text:"Marketing Video"},{icon:"📚",text:"Training"},{icon:"🔑",text:"Turnkey Business"},{icon:"💰",text:"Tax Benefits"}],visual:"data/_D0_B2_D1_81_D1_82_D1_80_D0_B5_D1_87_D0_B0-_D1_81-_D1_83_D1_81_D0_BF_D0_B5_D1_85_D0_BE_D0__5.jpg"},
+{type:"referral",bg:"data/slide7_bg.png",eyebrow:"REFERRAL PROGRAM",title:"REGISTER<br>3 PARTNERS<br><span>WITH PLATINUM PACKAGE</span>",subtitle:"AND EARN AS MUCH AS YOU SPEND",icons:[{icon:"<svg viewBox='0 0 24 24' width='28' height='28' stroke='currentColor' stroke-width='2' fill='none'><circle cx='12' cy='12' r='10'></circle><path d='M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'></path></svg>",text:"BUSINESS<br>WITHOUT BORDERS"},{icon:"<svg viewBox='0 0 24 24' width='30' height='30' stroke='currentColor' stroke-width='2' fill='none' stroke-linejoin='round' stroke-linecap='round'><path d='M2.5 19h19l-1.5-12.5L16 11l-4-7-4 7-4-4.5z'></path></svg>",text:"UNLIMITED<br>INCOME"},{icon:"<svg viewBox='0 0 24 24' width='28' height='28' stroke='currentColor' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'></path><circle cx='9' cy='7' r='4'></circle><path d='M23 21v-2a4 4 0 0 0-3-3.87'></path><path d='M16 3.13a4 4 0 0 1 0 7.75'></path></svg>",text:"POWER OF<br>PARTNERSHIP"}],bannerText:"BUILD YOUR FUTURE TOGETHER WITH A TEAM WHERE EVERY SUCCESS IS SHARED"},
+{type:"dreamcation",bg:"data/tmb_41776_8528.jpg",title:"GETAWAYS<br><span class='accent'>DREAMCATION</span>",subtitle:"Dream platform — over 2000 resorts.<br>Use your points and go!",metrics:[{v:"2000+",l:"Resorts worldwide"},{v:"100+",l:"Countries for vacation"}]},
+{type:"dest",bg:"data/img_8090252620003835094.jpg",eyebrow:"",title:"GETAWAY",sub:"DREAMCATION DREAM PLATFORM",dests:[{name:"Canary Islands, Spain",detail:"8 days / 7 nights · Studio",retail:"$899",our:"$7.00 +tax",img:"data/img_5015707547061959736.jpg"},{name:"Cabo San Lucas, Mexico",detail:"8 days / 7 nights · 1-bedroom Suite",retail:"$1,299",our:"$149.00 +tax",img:"data/img_3522254584554222769.jpg"},{name:"Orlando, Florida",detail:"8 days / 7 nights · 2-bedroom Suite",retail:"$1,149",our:"$142.00 +tax",img:"data/376-1686902224-orl_neighbourhood2_hero1_gettyimages-1368286102-scaled.jpeg"}]},
+{type:"cover",bg:"data/img_6781713265647315434.jpg",title:"<span style='color: #5bc0eb; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 10px 30px rgba(0,0,0,0.8);'>WORLD TOURS</span>",subtitle:"<span class='outlined-text' style='color: white; font-size: 28px; font-weight: 800;'>World Tours — 100+ destinations in the next 18 months. Where do you want to go?</span>",badge_top:"<span style='font-size:36px; font-weight:900; color: white; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000; display:block; margin-bottom: 10px; background: none; border: none; padding: 0;'>THE WORLD IS WAITING FOR YOU</span>", outlined: false, plainBadge: true},
+{type:"dest",bg:"data/montego-bay.jpg",eyebrow:"",title:"WORLD TOURS",sub:"TRAVEL AROUND THE WORLD",dests:[{name:"Venice, Italy",detail:"5 days · Breakfast · Excursion",retail:"$1,110",our:"$239.00 +tax",img:"data/img_1686101133334832249.jpg"},{name:"Dubai, UAE",detail:"7 days · 4★ Hotel · Daily Breakfast",retail:"$799",our:"$1.00 +tax",img:"data/img_4198718179172709250.jpg"},{name:"Montego Bay, Jamaica",detail:"5 days · 5★ Resort · All-inclusive",retail:"$1,716",our:"$579.00 +tax",img:"https://www.cruiseandtravel.co.uk/_gatsby/file/386bfa344995c96c89b897cce07b3f3e/93147_Doctors-Cave-Montego-Bay-Jamaica-CO-LeongShutterstock-shutterstock_16337890.jpg"}]},
+{type:"dest",bg:"data/img_3445845404363460163.jpg",eyebrow:"",title:"WORLD TOURS",sub:"TRAVEL AROUND THE WORLD",dests:[{name:"Las Vegas, USA",detail:"5 days / 4 nights · 5★ Hotel",retail:"$750",our:"$19.00 +tax",img:"data/img_138279401203284683.jpg"},{name:"Hawaii, USA",detail:"5 days / 4 nights · 5★ Hotel · Breakfast",retail:"$1,530",our:"$399.00 +tax",img:"data/img_5433379921170526037.jpg"},{name:"New York, USA",detail:"5 days / 4 nights · 5★ Hotel",retail:"$1,856",our:"$499.00 +tax",img:"data/img_8305500492132403973.jpg"}]},
+{type:"travelsite",bg:"data/68889-karibskij_bassejn-gorizont-nebo-komnata-okean-x750.jpg",
+    title: "Travorium Travel Site<br><span style='color:#5bc0eb;'>VERSUS RETAIL RATES</span>",
+    subtitle: "Save <span style='color:#5bc0eb;'>up to 60%</span> on travel. Over 2,000,000 hotels and<br>resorts at rates better than travel agents.",
+    cards:[
+    {t:"HOTELS",icon:`<svg viewBox="0 0 24 24" width="28" height="28" stroke="#5bc0eb" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4"></path><path d="M5 21V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v15"></path><path d="M9 4V2"></path><path d="M15 4V2"></path></svg>`,img:"data/img_5240321833192847864.jpg",d:"Better than travel agent rates"},
+    {t:"CRUISES",icon:`<svg viewBox="0 0 24 24" width="28" height="28" stroke="#5bc0eb" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path><path d="M19.38 20L21 7l-9.5 4-3.5-3.8L3 13l1.62 7"></path></svg>`,img:"data/img_1309808596405448921.jpg",d:"Exclusive offers"},
+    {t:"CAR RENTALS",icon:`<svg viewBox="0 0 24 24" width="28" height="28" stroke="#5bc0eb" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="10" width="22" height="8" rx="2"></rect><path d="M7 10l3-6h4l3 6"></path><circle cx="7" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle></svg>`,img:"data/img_8313823004469536246.jpg",d:"Competitive rates"},
+    {t:"ACTIVITIES",icon:`<svg viewBox="0 0 24 24" width="28" height="28" stroke="#5bc0eb" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20a6 6 0 0 0-12 0"></path><circle cx="12" cy="10" r="4"></circle><circle cx="12" cy="3" r="1"></circle></svg>`,img:"data/img_5678895211388458028.jpg",d:"Excursions and entertainment"}
+]},
+{type:"comparison",bg:"data/img_8709530173457480459.jpg", showFeatures: true, eyebrow: "COMPARE AND SEE", title: "REAL SAVINGS<br>WITH <span style='color:#5bc0eb;'>TRAVEL SITE</span>", body: "See for yourself: TRAVEL SITE offers the best conditions and real benefits that will make your trip unforgettable.", features: [{icon: "💰", title: "LOWER PRICE", desc: "Savings up to 60%"}, {icon: "🎁", title: "BONUSES", desc: "Cashback and discounts"}, {icon: "💎", title: "BENEFIT", desc: "Loyalty points"}]},
+{type:"comparison",bg:"data/img_8709530173457480459.jpg", showFeatures: false, eyebrow: "",
+    title: "BEST<br><span style='color:#5bc0eb;'>TRAVEL SITE</span><br>RATES", 
+    body: "Large TRAVEL SITE discounts versus retail rates from global aggregators.",
+    images: [
+        {src: "data/293.jpg", price: "$293.58", label: "EXPEDIA", isTrav: false},
+        {src: "data/277.jpg", price: "$277.74", label: "BOOKING", isTrav: false},
+        {src: "data/15.png", price: "$15.46", label: "TRAVORIUM", isTrav: true}
+    ]
+},
+{type:"cover",bg:"data/347775590118319.jpeg",title:"<span style='font-size:0.85em; color:#5bc0eb; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 0 10px 20px rgba(0,0,0,0.8);'>COMPENSATION</span>",subtitle:"<div class='gold-divider'><div class='line'></div><div class='diamond'></div><div class='line'></div></div><span class='outlined-text' style='font-size:32px; font-weight: 800; display:block; margin-bottom: 30px;'>Earn money by showing others<br>how to save on travel.</span><div class='gold-badge' style='margin: 0 auto;'>BECOME A TRAVORIUM PARTNER</div>", outlined: false, fullDark: true},
+{type:"industry",bg:"data/Depositphotos_212067780_s-2019-min.jpg",
+    quote: "“If you don't find a way to make money while you sleep, you will work until you die”",
+    author: "Warren Buffett",
+    menu: ["MARKET", "TIME", "BENEFIT"],
+    visual: "data/industry_visual.png",
+    title: "INDUSTRY",
+    bullets: [
+        "ACCORDING TO BLOOMBERG: TOURISM IS A $10 TRILLION INDUSTRY, AND THEY ESTIMATE IT WILL REACH $15.5 TRILLION BY 2033",
+        "DREAM BUSINESS",
+        "EASY TO EXPLAIN AND INTERESTING TO DO",
+        "HOME BUSINESS"
+    ]
+},
+{type:"businessmodel",bg:"https://i0.wp.com/theluxurytravelexpert.com/wp-content/uploads/2023/11/ONEONLY-LE-SAINT-GERAN-MAURITIUS.jpg?fit=1280%2C720&ssl=1",
+    eyebrow: "BUSINESS MODEL",
+    title: "HOW ARE WE <span style='color:#5bc0eb;'>DIFFERENT?</span>",
+    comparison: [
+        {left: "Priceline, Hotels, Expedia, Booking...", center: "<span style='text-decoration: line-through; color: #ff4d4d;'>Media & Internet Marketing</span>", right: "Customers", active: false},
+        {left: "TRAVORIUM", center: "YOU (Partner) 💰", right: "Customers", active: true}
+    ],
+    features: [
+        {icon: "🌐", title: "NO MEDIA OR ADVERTISING", desc: "We don't spend money on advertising — which means you earn more."},
+        {icon: "📊", title: "PASSIVE INCOME", desc: "Create it once — and earn income again and again from every booking."},
+        {icon: "🛡️", title: "TRANSPARENT AND PROFITABLE", desc: "You benefit directly from customers, without intermediaries or hidden fees."}
+    ]
+},
+{type:"comptable",bg:"https://i0.wp.com/theluxurytravelexpert.com/wp-content/uploads/2023/11/ONEONLY-LE-SAINT-GERAN-MAURITIUS.jpg?fit=1280%2C720&ssl=1",eyebrow:"COMPENSATION PLAN",title:"YOUR PATH TO LEADERSHIP <span style='color:#5bc0eb;'>AND FINANCIAL FREEDOM</span>",sub:"For illustration purposes only. Results may vary.", ranks:[
+    {name: "PLATINUM DIRECTOR", lpp: "3", left: "1", right: "2", daily: "$4.45", monthly: "$135", bonus: "$150", annual: "$1,620"},
+    {name: "1-STAR DIRECTOR", lpp: "4", left: "8", right: "8", daily: "$10", monthly: "$300 - $400", bonus: "+$10", annual: "$4,800"},
+    {name: "2-STAR DIRECTOR", lpp: "5", left: "25", right: "25", daily: "$25", monthly: "$750 - $1,500", bonus: "+$20", annual: "$18,000"},
+    {name: "3-STAR DIRECTOR", lpp: "7", left: "63", right: "63", daily: "$70", monthly: "$2,100 - $2,400", bonus: "+$30", annual: "$28,800"},
+    {name: "4-STAR DIRECTOR", lpp: "9", left: "125", right: "125", daily: "$100", monthly: "$3,100 - $3,500", bonus: "+$40", annual: "$42,000"},
+    {name: "AMBASSADOR", lpp: "10", left: "188", right: "188", daily: "$140", monthly: "$4,340 - $10,460", bonus: "+$50", annual: "$80,000 - $100,000", highlight: true}
+]},
+{type:"generic",bg:"data/img_8232451684165173779.jpg",darken:40,eyebrow:"",title:'<span style="color:#5bc0eb; font-size:60px; font-weight:900; text-transform:uppercase; text-shadow: 2.5px 2.5px 0 #000, -2.5px -2.5px 0 #000, 2.5px -2.5px 0 #000, -2.5px 2.5px 0 #000, 0 10px 30px rgba(0,0,0,0.8);">Ambassador Lifestyle</span>',body:`
+<div class='tree-graphic'>
+    <div class='tree-top' style='font-size:40px; font-weight:900; color:#EFC96A; text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000;'>AMBASSADOR</div>
+    <div class='tree-split'>
+        <div class='tree-node'><div class='tree-icon'><img src="data/3048124.png"></div><span>188 PARTNERS<br>ON THE LEFT</span></div>
+        <div class='tree-node'><div class='tree-icon'><img src="data/9092388.png"></div><span>188 PARTNERS<br>ON THE RIGHT</span></div>
+    </div>
+    <div class='tree-pay'>
+        <div>Daily: $140</div>
+        <div>Monthly: $4,200 – $12,000</div>
+    </div>
+    <div style='font-size:20px; font-weight:800; color:var(--ink-soft); display:flex; gap:20px; margin-top:10px;'>
+        <span>🌴 Annual vacation</span>
+        <span>🌍 Global bonuses</span>
+        <span>💼 1 Ambassador Share</span>
+        <span>👜 Louis Vuitton Gift</span>
+    </div>
+</div>
+`},
+{type:"comptable",bg:"https://i0.wp.com/theluxurytravelexpert.com/wp-content/uploads/2023/11/ONEONLY-LE-SAINT-GERAN-MAURITIUS.jpg?fit=1280%2C720&ssl=1", titleSize: "44px", eyebrow:"COMPENSATION PLAN",title:"PATH TO HIGHEST ACHIEVEMENTS <span style='color:#5bc0eb;'>WITHOUT BORDERS</span>",sub:"For illustration purposes only. Results may vary.", headers: ["AMBASSADORS", "PEP", "LEFT SIDE", "RIGHT SIDE", "DAILY", "MONTHLY", "BONUS", "ANNUALLY"], ranks:[
+    {name: "AMBASSADOR", lpp: "9", left: "188", right: "188", daily: "$140", monthly: "$8,500 - $11,000", bonus: "+$50", annual: "$100,000+"},
+    {name: "1★ AMBASSADOR", lpp: "9", left: "376", right: "376", daily: "$225", monthly: "$11,500 - $14,000", bonus: "+$60", annual: "$150,000+"},
+    {name: "2★ AMBASSADOR", lpp: "9", left: "750", right: "750", daily: "$300", monthly: "$18,000 - $21,500", bonus: "+$60", annual: "$200,000+"},
+    {name: "3★ AMBASSADOR", lpp: "9", left: "1250", right: "1250", daily: "$400", monthly: "$21,000 - $26,000", bonus: "+$60", annual: "$250,000+"},
+    {name: "4★ AMBASSADOR", lpp: "9", left: "2500", right: "2500", daily: "$600", monthly: "$30,000 - $35,000", bonus: "+$60", annual: "$360,000+"},
+    {name: "5★ AMBASSADOR", lpp: "9", left: "3750", right: "3750", daily: "$800", monthly: "$38,000 - $42,000", bonus: "+$60", annual: "$450,000+"}
+]},
+{type:"generic",bg:"data/img_8232451684165173779.jpg",darken:40,eyebrow:"",title:'<span style="color:#5bc0eb; font-size:60px; font-weight:900; text-transform:uppercase; text-shadow: 2.5px 2.5px 0 #000, -2.5px -2.5px 0 #000, 2.5px -2.5px 0 #000, -2.5px 2.5px 0 #000, 0 10px 30px rgba(0,0,0,0.8);">Passive Income</span>',body:`
+<div class='tree-graphic'>
+    <div class='tree-top' style='font-size:38px; font-weight:900; color:#EFC96A; text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000;'>PLATINUM DIRECTOR</div>
+    <div class='tree-split'>
+        <div class='tree-node'><div class='tree-icon'><img src="data/3048124.png"></div><span>1 PARTNER<br>ON THE LEFT</span></div>
+        <div class='tree-node'><div class='tree-icon'><img src="data/9092388.png"></div><span>2 PARTNERS<br>ON THE RIGHT</span></div>
+    </div>
+    <div class='tree-pay'>
+        <div>Daily: $4.45</div>
+        <div>Monthly: $137</div>
+    </div>
+    <div style='margin-top:10px;'>
+        <div style='color: black; font-weight: 900; font-size: 24px; text-transform: uppercase; font-family: "Montserrat", sans-serif;'>3 PERSONAL PARTNERS = FREE MEMBERSHIP</div>
+    </div>
+</div>
+`},
+{type:"generic",bg:"data/1280px-Lights_of_Rockefeller_Center_during_sunset.jpg",darken:50,eyebrow:"",title:'<span style="color:#5bc0eb; font-size:60px; font-weight:900; text-transform:uppercase; text-shadow: 2.5px 2.5px 0 #000, -2.5px -2.5px 0 #000, 2.5px -2.5px 0 #000, -2.5px 2.5px 0 #000, 0 10px 30px rgba(0,0,0,0.8);">Compensation Plan</span>',body:`
+<div class='four-trees'>
+    <div class='tree-graphic'>
+        <div class='tree-top' style='color:#EFC96A; font-weight:900; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;'>1★ DIRECTOR</div>
+        <div class='tree-split'>
+            <div class='tree-node'><div class='tree-icon'><img src="data/3048124.png"></div><span>8 PARTNERS<br>ON THE LEFT</span></div>
+            <div class='tree-node'><div class='tree-icon'><img src="data/9092388.png"></div><span>8 PARTNERS<br>ON THE RIGHT</span></div>
+        </div>
+        <div class='tree-pay'>
+            <div>Daily: $10</div>
+            <div>Monthly: $300-$700</div>
+            <div style='border-top:1px solid rgba(255,255,255,0.2); padding-top:4px; margin-top:4px;'>Annually: $3,600-$8,000</div>
+        </div>
+    </div>
+    <div class='tree-graphic'>
+        <div class='tree-top' style='color:#EFC96A; font-weight:900; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;'>2★ DIRECTOR</div>
+        <div class='tree-split'>
+            <div class='tree-node'><div class='tree-icon'><img src="data/3048124.png"></div><span>25 PARTNERS<br>ON THE LEFT</span></div>
+            <div class='tree-node'><div class='tree-icon'><img src="data/9092388.png"></div><span>25 PARTNERS<br>ON THE RIGHT</span></div>
+        </div>
+        <div class='tree-pay'>
+            <div>Daily: $25</div>
+            <div>Monthly: $750-$2,000</div>
+            <div style='border-top:1px solid rgba(255,255,255,0.2); padding-top:4px; margin-top:4px;'>Annually: $9,000-$24,000</div>
+        </div>
+    </div>
+    <div class='tree-graphic'>
+        <div class='tree-top' style='color:#EFC96A; font-weight:900; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;'>3★ DIRECTOR</div>
+        <div class='tree-split'>
+            <div class='tree-node'><div class='tree-icon'><img src="data/3048124.png"></div><span>63 PARTNERS<br>ON THE LEFT</span></div>
+            <div class='tree-node'><div class='tree-icon'><img src="data/9092388.png"></div><span>63 PARTNERS<br>ON THE RIGHT</span></div>
+        </div>
+        <div class='tree-pay'>
+            <div>Daily: $70</div>
+            <div>Monthly: $2,100-$3,000</div>
+            <div style='border-top:1px solid rgba(255,255,255,0.2); padding-top:4px; margin-top:4px;'>Annually: $25,000-$36,000</div>
+        </div>
+    </div>
+    <div class='tree-graphic'>
+        <div class='tree-top' style='color:#EFC96A; font-weight:900; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;'>4★ DIRECTOR</div>
+        <div class='tree-split'>
+            <div class='tree-node'><div class='tree-icon'><img src="data/3048124.png"></div><span>125 PARTNERS<br>ON THE LEFT</span></div>
+            <div class='tree-node'><div class='tree-icon'><img src="data/9092388.png"></div><span>125 PARTNERS<br>ON THE RIGHT</span></div>
+        </div>
+        <div class='tree-pay'>
+            <div>Daily: $100</div>
+            <div>Monthly: $3,100-$4,000</div>
+            <div style='border-top:1px solid rgba(255,255,255,0.2); padding-top:4px; margin-top:4px;'>Annually: $36,000-$48,000</div>
+        </div>
+    </div>
+</div>
+`},
+{type:"cover",bg:"data/TAL-turquoise-blue-tropical-water-WHYTURQ0323-741b0f8d4d8849f38f10a96ebef6c8d5.jpg",title:"TRAVORIUM",subtitle:"<div class='gold-divider'><div class='line'></div><div class='diamond'></div><div class='line'></div></div><span class='outlined-text' style='font-size:30px; font-weight: 800; display:block; margin-bottom: 30px;'>Contact the person who invited you and find out how to become a partner of our company!<br>And we will teach you all the strategies necessary for your success!</span><div class='gold-badge' style='margin: 0 auto;'>A COMPANY FOR A BETTER LIFE</div>", outlined: true, darkenClass: 'bottom-dark-70'},
+{type:"cover",bg:"data/shutterstock_444622738.jpg",title:"TRAVORIUM",subtitle:"<div class='gold-divider'><div class='line'></div><div class='diamond'></div><div class='line'></div></div><span class='outlined-text' style='font-size:36px; font-weight: 800; display:block; margin-bottom: 30px;'>Travel more. Travel better.</span><div class='gold-badge' style='margin: 0 auto;'>THANK YOU FOR YOUR ATTENTION!</div>", outlined: true, darkenClass: 'bottom-dark-70'}
+];
+const SLIDES_ES=[
+{type:"cover",bg:"data/img_454080583447217438.jpg",title:"TRAVORIUM",subtitle:"<div class='gold-divider'><div class='line'></div><div class='diamond'></div><div class='line'></div></div><span class='outlined-text' style='font-size:36px; font-weight: 800; display:block; margin-bottom: 30px;'>Viaja más, viaja mejor,<br>viaja con más beneficio.</span><div class='gold-badge' style='margin: 0 auto;'><div class='gold-badge-icon'>✈️</div>UNA COMPAÑÍA QUE MEJORARÁ TU VIDA</div>", outlined: true},
+{type:"company",bg:"data/img_208638445521187983.jpg",eyebrow:"COMPAÑÍA",title:'FUNDADA EN MARZO DE 2013 EN EE. UU. <span class="accent">SEGUNDA DÉCADA DE NEGOCIO</span>',metrics:[{v:"70+",l:"Países en 7 continentes"},{v:"33 000+",l:"Nuevos clientes en 2024"}],offices:[["OFICINA PRINCIPAL","Temecula, California (EE. UU.)"],["MÁS OFICINAS","Madrid (España) <br> Almaty (Kazajistán)"]],desc:"Compañía especializada en la captación de clientes.<br>Millones de ventas en los últimos 2 años. Crecimiento constante.",ceo:{img:"data/Screenshot 2026-02-28 at 10.03.27.png",name:"David Hart",role:"Director General y Fundador"}},
+{type:"benefits",bg:"data/bbf0a238847940cf860de3d2ce6f7028_img.jpg",eyebrow:"BENEFICIOS",title:"¿Qué es<br>Travorium?",heroText:"Una plataforma única de viajes y negocios que combina las mejores ofertas de vacaciones con oportunidades de ingresos pasivos.",cards:[{icon:"💎",label:"PUNTOS",text:"Acumulación de puntos de viaje y su uso inmediato"},{icon:"💰",label:"AHORRO",text:"Reserve viajes a precios de agente de viajes: ahorros de hasta el 60%"},{icon:"🔄",label:"CASHBACK",text:"Reembolso del 3% de los gastos en forma de puntos de fidelidad de viaje"},{icon:"📅",label:"VACACIONES",text:"Obtención de 2 vacaciones cada 12–14 meses (paquete Platino)"},{icon:"📈",label:"INGRESOS",text:"Ganar dinero 24/7 desde cualquier lugar del mundo — ingresos pasivos"},{icon:"💼",label:"NEGOCIO",text:"Asociación turística y una oportunidad de negocio única"}]},
+{type:"services",bg:"data/GettyImages_482194715-56a1329e5f9b58b7d0bcf666.jpg",darkenClass:"darken-10",title:"Servicios que encontrará en nuestras plataformas",items:[{name:"Resorts",img:"data/img_5240321833192847864.jpg"},{name:"Hoteles",img:"data/img_7558621548641612647.jpg"},{name:"Cruceros",img:"data/img_1309808596405448921.jpg"},{name:"Alquileres",img:"data/img_8313823004469536246.jpg"},{name:"Parques",img:"data/img_7969959102442128070.jpg"},{name:"Tours",img:"data/img_5351414371591150961.jpg"},{name:"Actividades",img:"data/img_6291367685573576010.jpg"},{name:"Entretenimiento",img:"data/img_5678895211388458028.jpg"}]},
+{type:"pricing",bg:"data/dji_20240509142527_0247_d.jpg",eyebrow:"",title:"ELIJA SU PAQUETE<br>DE ASOCIACIÓN",sub:"<div class='gold-divider' style='margin: 10px auto 15px; width: 60%; max-width: 500px;'><div class='line'></div><div class='diamond'></div><div class='line'></div></div><div class='outlined-text' style='color: white; font-size: 18px; font-weight: 800; margin-bottom: 10px;'>Sin contrato</div>",plans:[{name:"Plata",price:"$69.95",monthly:"<span style='font-size:18px; font-weight:900;'>$52.50</span>",points:"<span style='font-size:18px; font-weight:900;'>Sin puntos de viaje</span>",feats:["Travel Site — mejor que las tarifas de agentes de viajes","Hoteles, alquiler de coches, cruceros, entretenimiento"]},{name:"Titanio",price:"$149.95",monthly:"<span style='font-size:18px; font-weight:900;'>$75.00</span>",points:"<span style='font-size:18px; font-weight:900;'>150 puntos de viaje al mes</span>",feats:["Travel Site — mejor que las tarifas de agentes de viajes","World Tours — hasta un 50% de descuento","Getaways — hasta un 50% de descuento"]},{name:"Platino",price:"$269.95",monthly:"<span style='font-size:18px; font-weight:900;'>$135.00</span>",points:"<span style='font-size:18px; font-weight:900;'>270 puntos de viaje al mes</span>",feats:["Travel Site — mejor que las tarifas de agentes de viajes","World Tours — hasta un 80% de descuento","Getaways — hasta un 80% de descuento"], badge:"MÁS POPULAR"}]},
+{type:"partnership",bg:"data/img_9011175918394987006.jpg",eyebrow:"ASOCIACIÓN",title:'CONVIÉRTASE EN DUEÑO DE<br><span style="color: #5bc0eb; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;">NEGOCIO INDEPENDIENTE</span>',desc:"Negocio llave en mano: todo lo que necesita para empezar ya está incluido en su paquete de asociación.",price_val:"$99.95 ANUALMENTE",feats:[{icon:"🌐",text:"Sitio web"},{icon:"📊",text:"Oficina virtual"},{icon:"🎬",text:"Vídeo de marketing"},{icon:"📚",text:"Capacitación"},{icon:"🔑",text:"Negocio llave en mano"},{icon:"💰",text:"Beneficios fiscales"}],visual:"data/_D0_B2_D1_81_D1_82_D1_80_D0_B5_D1_87_D0_B0-_D1_81-_D1_83_D1_81_D0_BF_D0_B5_D1_85_D0_BE_D0__5.jpg"},
+{type:"referral",bg:"data/slide7_bg.png",eyebrow:"PROGRAMA DE REFERIDOS",title:"REGISTRE A<br>3 SOCIOS<br><span>CON EL PAQUETE PLATINO</span>",subtitle:"Y GANE TANTO COMO GASTA",icons:[{icon:"<svg viewBox='0 0 24 24' width='28' height='28' stroke='currentColor' stroke-width='2' fill='none'><circle cx='12' cy='12' r='10'></circle><path d='M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'></path></svg>",text:"NEGOCIO<br>SIN FRONTERAS"},{icon:"<svg viewBox='0 0 24 24' width='30' height='30' stroke='currentColor' stroke-width='2' fill='none' stroke-linejoin='round' stroke-linecap='round'><path d='M2.5 19h19l-1.5-12.5L16 11l-4-7-4 7-4-4.5z'></path></svg>",text:"INGRESOS<br>ILIMITADOS"},{icon:"<svg viewBox='0 0 24 24' width='28' height='28' stroke='currentColor' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'></path><circle cx='9' cy='7' r='4'></circle><path d='M23 21v-2a4 4 0 0 0-3-3.87'></path><path d='M16 3.13a4 4 0 0 1 0 7.75'></path></svg>",text:"EL PODER DE LA<br>ASOCIACIÓN"}],bannerText:"CONSTRUYA SU FUTURO JUNTO A UN EQUIPO DONDE CADA ÉXITO ES COMPARTIDO"},
+{type:"dreamcation",bg:"data/tmb_41776_8528.jpg",title:"GETAWAYS<br><span class='accent'>DREAMCATION</span>",subtitle:"Plataforma de ensueño: más de 2000 complejos turísticos.<br>¡Usa tus puntos y listo!",metrics:[{v:"2000+",l:"Resorts en todo el mundo"},{v:"100+",l:"Países para vacaciones"}]},
+{type:"dest",bg:"data/img_8090252620003835094.jpg",eyebrow:"",title:"GETAWAY",sub:"PLATAFORMA DE ENSUEÑO DREAMCATION",dests:[{name:"Islas Canarias, España",detail:"8 días / 7 noches · Estudio",retail:"$899",our:"$7.00 +impuesto",img:"data/img_5015707547061959736.jpg"},{name:"Cabo San Lucas, México",detail:"8 días / 7 noches · Suite de 1 dormitorio",retail:"$1,299",our:"$149.00 +impuesto",img:"data/img_3522254584554222769.jpg"},{name:"Orlando, Florida",detail:"8 días / 7 noches · Suite de 2 dormitorios",retail:"$1,149",our:"$142.00 +impuesto",img:"data/376-1686902224-orl_neighbourhood2_hero1_gettyimages-1368286102-scaled.jpeg"}]},
+{type:"cover",bg:"data/img_6781713265647315434.jpg",title:"<span style='color: #5bc0eb; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 10px 30px rgba(0,0,0,0.8);'>WORLD TOURS</span>",subtitle:"<span class='outlined-text' style='color: white; font-size: 28px; font-weight: 800;'>World Tours — más de 100 destinos en los próximos 18 meses. ¿A dónde quieres ir?</span>",badge_top:"<span style='font-size:36px; font-weight:900; color: white; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000; display:block; margin-bottom: 10px; background: none; border: none; padding: 0;'>EL MUNDO TE ESPERA</span>", outlined: false, plainBadge: true},
+{type:"dest",bg:"data/montego-bay.jpg",eyebrow:"",title:"WORLD TOURS",sub:"VIAJES POR TODO EL MUNDO",dests:[{name:"Venecia, Italia",detail:"5 días · Desayuno · Excursión",retail:"$1,110",our:"$239.00 +impuesto",img:"data/img_1686101133334832249.jpg"},{name:"Dubái, EAU",detail:"7 días · Hotel 4★ · Desayunos diarios",retail:"$799",our:"$1.00 +impuesto",img:"data/img_4198718179172709250.jpg"},{name:"Montego Bay, Jamaica",detail:"5 días · Resort 5★ · Todo incluido",retail:"$1,716",our:"$579.00 +impuesto",img:"https://www.cruiseandtravel.co.uk/_gatsby/file/386bfa344995c96c89b897cce07b3f3e/93147_Doctors-Cave-Montego-Bay-Jamaica-CO-LeongShutterstock-shutterstock_16337890.jpg"}]},
+{type:"dest",bg:"data/img_3445845404363460163.jpg",eyebrow:"",title:"WORLD TOURS",sub:"VIAJES POR TODO EL MUNDO",dests:[{name:"Las Vegas, EE. UU.",detail:"5 días / 4 noches · Hotel 5★",retail:"$750",our:"$19.00 +impuesto",img:"data/img_138279401203284683.jpg"},{name:"Hawái, EE. UU.",detail:"5 días / 4 noches · Hotel 5★ · Desayuno",retail:"$1,530",our:"$399.00 +impuesto",img:"data/img_5433379921170526037.jpg"},{name:"Nueva York, EE. UU.",detail:"5 días / 4 noches · Hotel 5★",retail:"$1,856",our:"$499.00 +impuesto",img:"data/img_8305500492132403973.jpg"}]},
+{type:"travelsite",bg:"data/68889-karibskij_bassejn-gorizont-nebo-komnata-okean-x750.jpg", customClass: "es-travelsite",
+    title: "Travorium Travel Site<br><span style='color:#5bc0eb;'>CONTRA TARIFAS MINORISTAS</span>",
+    subtitle: "Ahorre <span style='color:#5bc0eb;'>hasta un 60%</span> en viajes. Más de 2 000 000 de hoteles y<br>resorts con tarifas mejores que las de los agentes de viajes.",
+    cards:[
+    {t:"HOTELES",icon:`<svg viewBox="0 0 24 24" width="28" height="28" stroke="#5bc0eb" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4"></path><path d="M5 21V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v15"></path><path d="M9 4V2"></path><path d="M15 4V2"></path></svg>`,img:"data/img_5240321833192847864.jpg",d:"Mejor que las tarifas de agentes de viajes"},
+    {t:"CRUCEROS",icon:`<svg viewBox="0 0 24 24" width="28" height="28" stroke="#5bc0eb" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path><path d="M19.38 20L21 7l-9.5 4-3.5-3.8L3 13l1.62 7"></path></svg>`,img:"data/img_1309808596405448921.jpg",d:"Ofertas exclusivas"},
+    {t:"ALQUILER DE COCHES",icon:`<svg viewBox="0 0 24 24" width="28" height="28" stroke="#5bc0eb" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="10" width="22" height="8" rx="2"></rect><path d="M7 10l3-6h4l3 6"></path><circle cx="7" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle></svg>`,img:"data/img_8313823004469536246.jpg",d:"Tarifas competitivas"},
+    {t:"ACTIVIDADES",icon:`<svg viewBox="0 0 24 24" width="28" height="28" stroke="#5bc0eb" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20a6 6 0 0 0-12 0"></path><circle cx="12" cy="10" r="4"></circle><circle cx="12" cy="3" r="1"></circle></svg>`,img:"data/img_5678895211388458028.jpg",d:"Excursiones y entretenimiento"}
+]},
+{type:"comparison",bg:"data/img_8709530173457480459.jpg", showFeatures: true, customClass: "es-comparison-14", eyebrow: "COMPARA Y COMPRUEBA", title: "AHORRO REAL<br>CON <span style='color:#5bc0eb;'>TRAVEL SITE</span>", body: "Comprueba por ti mismo: TRAVEL SITE ofrece las mejores condiciones y beneficios reales que harán que tu viaje sea inolvidable.", features: [{icon: "💰", title: "PRECIO MÁS BAJO", desc: "Ahorro de hasta el 60%"}, {icon: "🎁", title: "BONOS", desc: "Reembolsos y descuentos"}, {icon: "💎", title: "BENEFICIO", desc: "Puntos de fidelidad"}]},
+{type:"comparison",bg:"data/img_8709530173457480459.jpg", showFeatures: false, eyebrow: "",
+    title: "LAS MEJORES<br>TARIFAS DE<br><span style='color:#5bc0eb;'>TRAVEL SITE</span>", 
+    body: "Grandes descuentos de TRAVEL SITE frente a las tarifas minoristas de los agregadores globales.",
+    images: [
+        {src: "data/293.jpg", price: "$293.58", label: "EXPEDIA", isTrav: false},
+        {src: "data/277.jpg", price: "$277.74", label: "BOOKING", isTrav: false},
+        {src: "data/15.png", price: "$15.46", label: "TRAVORIUM", isTrav: true}
+    ]
+},
+{type:"cover",bg:"data/347775590118319.jpeg",title:"<span style='font-size:0.85em; color:#5bc0eb; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 0 10px 20px rgba(0,0,0,0.8);'>COMPENSACIÓN</span>",subtitle:"<div class='gold-divider'><div class='line'></div><div class='diamond'></div><div class='line'></div></div><span class='outlined-text' style='font-size:32px; font-weight: 800; display:block; margin-bottom: 30px;'>Gana dinero enseñando a otros<br>cómo ahorrar en viajes.</span><div class='gold-badge' style='margin: 0 auto;'>CONVIÉRTASE EN SOCIO DE TRAVORIUM</div>", outlined: false, fullDark: true},
+{type:"industry",bg:"data/Depositphotos_212067780_s-2019-min.jpg",
+    quote: "“Si no encuentras una manera de ganar dinero mientras duermes, trabajarás hasta que mueras”",
+    author: "Warren Buffett",
+    menu: ["MERCADO", "TIEMPO", "BENEFICIO"],
+    visual: "data/industry_visual.png",
+    title: "INDUSTRIA",
+    bullets: [
+        "SEGÚN BLOOMBERG: EL TURISMO ES UNA INDUSTRIA DE $10 BILLONES Y ESTIMAN QUE ALCANZARÁ LOS $15,5 BILLONES EN 2033",
+        "NEGOCIO DE ENSUEÑO",
+        "FÁCIL DE EXPLICAR E INTERESANTE DE HACER",
+        "NEGOCIO DESDE CASA"
+    ]
+},
+{type:"businessmodel",bg:"https://i0.wp.com/theluxurytravelexpert.com/wp-content/uploads/2023/11/ONEONLY-LE-SAINT-GERAN-MAURITIUS.jpg?fit=1280%2C720&ssl=1",
+    eyebrow: "MODELO DE NEGOCIO",
+    title: "¿EN QUÉ NOS <span style='color:#5bc0eb;'>DIFERENCIAMOS?</span>",
+    comparison: [
+        {left: "Priceline, Hotels, Expedia, Booking...", center: "<span style='text-decoration: line-through; color: #ff4d4d;'>Medios y marketing en Internet</span>", right: "Clientes", active: false},
+        {left: "TRAVORIUM", center: "USTED (Socio) 💰", right: "Clientes", active: true}
+    ],
+    features: [
+        {icon: "🌐", title: "SIN MEDIOS NI PUBLICIDAD", desc: "No gastamos dinero en publicidad, lo que significa que usted gana más."},
+        {icon: "📊", title: "INGRESOS PASIVOS", desc: "Créelo una vez y obtenga ingresos una y otra vez con cada reserva."},
+        {icon: "🛡️", title: "TRANSPARENTE Y RENTABLE", desc: "Usted se beneficia directamente de los clientes, sin intermediarios ni comisiones ocultas."}
+    ]
+},
+{type:"comptable",bg:"https://i0.wp.com/theluxurytravelexpert.com/wp-content/uploads/2023/11/ONEONLY-LE-SAINT-GERAN-MAURITIUS.jpg?fit=1280%2C720&ssl=1", titleSize: "42px", eyebrow:"PLAN DE COMPENSACIÓN",title:"SU CAMINO AL LIDERAZGO <span style='color:#5bc0eb;'>Y LA LIBERTAD FINANCIERA</span>",sub:"Solo para fines ilustrativos. Los resultados pueden variar.", ranks:[
+    {name: "DIRECTOR PLATINO", lpp: "3", left: "1", right: "2", daily: "$4.45", monthly: "$135", bonus: "$150", annual: "$1,620"},
+    {name: "DIRECTOR – 1 ESTRELLA", lpp: "4", left: "8", right: "8", daily: "$10", monthly: "$300 - $400", bonus: "+$10", annual: "$4,800"},
+    {name: "DIRECTOR – 2 ESTRELLAS", lpp: "5", left: "25", right: "25", daily: "$25", monthly: "$750 - $1,500", bonus: "+$20", annual: "$18,000"},
+    {name: "DIRECTOR – 3 ESTRELLAS", lpp: "7", left: "63", right: "63", daily: "$70", monthly: "$2,100 - $2,400", bonus: "+$30", annual: "$28,800"},
+    {name: "DIRECTOR – 4 ESTRELLAS", lpp: "9", left: "125", right: "125", daily: "$100", monthly: "$3,100 - $3,500", bonus: "+$40", annual: "$42,000"},
+    {name: "EMBAJADOR", lpp: "10", left: "188", right: "188", daily: "$140", monthly: "$4,340 - $10,460", bonus: "+$50", annual: "$80,000 - $100,000", highlight: true}
+]},
+{type:"generic",bg:"data/img_8232451684165173779.jpg",darken:40,eyebrow:"",title:'<span style="color:#5bc0eb; font-size:60px; font-weight:900; text-transform:uppercase; text-shadow: 2.5px 2.5px 0 #000, -2.5px -2.5px 0 #000, 2.5px -2.5px 0 #000, -2.5px 2.5px 0 #000, 0 10px 30px rgba(0,0,0,0.8);">Estilo de vida del Embajador</span>',body:`
+<div class='tree-graphic'>
+    <div class='tree-top' style='font-size:40px; font-weight:900; color:#EFC96A; text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000;'>EMBAJADOR</div>
+    <div class='tree-split'>
+        <div class='tree-node'><div class='tree-icon'><img src="data/3048124.png"></div><span>188 SOCIOS<br>A LA IZQUIERDA</span></div>
+        <div class='tree-node'><div class='tree-icon'><img src="data/9092388.png"></div><span>188 SOCIOS<br>A LA DERECHA</span></div>
+    </div>
+    <div class='tree-pay'>
+        <div>Diario: $140</div>
+        <div>Mensual: $4,200 – $12,000</div>
+    </div>
+    <div style='font-size:20px; font-weight:800; color:var(--ink-soft); display:flex; gap:20px; margin-top:10px;'>
+        <span>🌴 Vacaciones anuales</span>
+        <span>🌍 Bonos globales</span>
+        <span>💼 1 Acción de Embajador</span>
+        <span>👜 Regalo de Louis Vuitton</span>
+    </div>
+</div>
+`},
+{type:"comptable",bg:"https://i0.wp.com/theluxurytravelexpert.com/wp-content/uploads/2023/11/ONEONLY-LE-SAINT-GERAN-MAURITIUS.jpg?fit=1280%2C720&ssl=1", titleSize: "44px", eyebrow:"PLAN DE COMPENSACIÓN",title:"CAMINO HACIA LOS MÁS ALTOS LOGROS <span style='color:#5bc0eb;'>SIN FRONTERAS</span>",sub:"Solo para fines ilustrativos. Los resultados pueden variar.", headers: ["EMBAJADORES", "SPP", "LADO IZQUIERDO", "LADO DERECHO", "DIARIO", "MENSUAL", "BONO", "ANUALMENTE"], ranks:[
+    {name: "EMBAJADOR", lpp: "9", left: "188", right: "188", daily: "$140", monthly: "$8,500 - $11,000", bonus: "+$50", annual: "$100,000+"},
+    {name: "EMBAJADOR 1★", lpp: "9", left: "376", right: "376", daily: "$225", monthly: "$11,500 - $14,000", bonus: "+$60", annual: "$150,000+"},
+    {name: "EMBAJADOR 2★", lpp: "9", left: "750", right: "750", daily: "$300", monthly: "$18,000 - $21,500", bonus: "+$60", annual: "$200,000+"},
+    {name: "EMBAJADOR 3★", lpp: "9", left: "1250", right: "1250", daily: "$400", monthly: "$21,000 - $26,000", bonus: "+$60", annual: "$250,000+"},
+    {name: "EMBAJADOR 4★", lpp: "9", left: "2500", right: "2500", daily: "$600", monthly: "$30,000 - $35,000", bonus: "+$60", annual: "$360,000+"},
+    {name: "EMBAJADOR 5★", lpp: "9", left: "3750", right: "3750", daily: "$800", monthly: "$38,000 - $42,000", bonus: "+$60", annual: "$450,000+"}
+]},
+{type:"generic",bg:"data/img_8232451684165173779.jpg",darken:40,eyebrow:"",title:'<span style="color:#5bc0eb; font-size:60px; font-weight:900; text-transform:uppercase; text-shadow: 2.5px 2.5px 0 #000, -2.5px -2.5px 0 #000, 2.5px -2.5px 0 #000, -2.5px 2.5px 0 #000, 0 10px 30px rgba(0,0,0,0.8);">Ingresos Pasivos</span>',body:`
+<div class='tree-graphic'>
+    <div class='tree-top' style='font-size:38px; font-weight:900; color:#EFC96A; text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000;'>DIRECTOR PLATINO</div>
+    <div class='tree-split'>
+        <div class='tree-node'><div class='tree-icon'><img src="data/3048124.png"></div><span>1 SOCIO<br>A LA IZQUIERDA</span></div>
+        <div class='tree-node'><div class='tree-icon'><img src="data/9092388.png"></div><span>2 SOCIOS<br>A LA DERECHA</span></div>
+    </div>
+    <div class='tree-pay'>
+        <div>Diario: $4.45</div>
+        <div>Mensual: $137</div>
+    </div>
+    <div style='margin-top:10px;'>
+        <div style='color: black; font-weight: 900; font-size: 24px; text-transform: uppercase; font-family: "Montserrat", sans-serif;'>3 SOCIOS PERSONALES = MEMBRESÍA GRATUITA</div>
+    </div>
+</div>
+`},
+{type:"generic",bg:"data/1280px-Lights_of_Rockefeller_Center_during_sunset.jpg",darken:50,eyebrow:"",title:'<span style="color:#5bc0eb; font-size:60px; font-weight:900; text-transform:uppercase; text-shadow: 2.5px 2.5px 0 #000, -2.5px -2.5px 0 #000, 2.5px -2.5px 0 #000, -2.5px 2.5px 0 #000, 0 10px 30px rgba(0,0,0,0.8);">Plan de Compensación</span>',body:`
+<div class='four-trees'>
+    <div class='tree-graphic'>
+        <div class='tree-top' style='color:#EFC96A; font-weight:900; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;'>DIRECTOR 1★</div>
+        <div class='tree-split'>
+            <div class='tree-node'><div class='tree-icon'><img src="data/3048124.png"></div><span>8 SOCIOS<br>A LA IZQUIERDA</span></div>
+            <div class='tree-node'><div class='tree-icon'><img src="data/9092388.png"></div><span>8 SOCIOS<br>A LA DERECHA</span></div>
+        </div>
+        <div class='tree-pay'>
+            <div>Diario: $10</div>
+            <div>Mensual: $300-$700</div>
+            <div style='border-top:1px solid rgba(255,255,255,0.2); padding-top:4px; margin-top:4px;'>Anual: $3,600-$8,000</div>
+        </div>
+    </div>
+    <div class='tree-graphic'>
+        <div class='tree-top' style='color:#EFC96A; font-weight:900; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;'>DIRECTOR 2★</div>
+        <div class='tree-split'>
+            <div class='tree-node'><div class='tree-icon'><img src="data/3048124.png"></div><span>25 SOCIOS<br>A LA IZQUIERDA</span></div>
+            <div class='tree-node'><div class='tree-icon'><img src="data/9092388.png"></div><span>25 SOCIOS<br>A LA DERECHA</span></div>
+        </div>
+        <div class='tree-pay'>
+            <div>Diario: $25</div>
+            <div>Mensual: $750-$2,000</div>
+            <div style='border-top:1px solid rgba(255,255,255,0.2); padding-top:4px; margin-top:4px;'>Anual: $9,000-$24,000</div>
+        </div>
+    </div>
+    <div class='tree-graphic'>
+        <div class='tree-top' style='color:#EFC96A; font-weight:900; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;'>DIRECTOR 3★</div>
+        <div class='tree-split'>
+            <div class='tree-node'><div class='tree-icon'><img src="data/3048124.png"></div><span>63 SOCIOS<br>A LA IZQUIERDA</span></div>
+            <div class='tree-node'><div class='tree-icon'><img src="data/9092388.png"></div><span>63 SOCIOS<br>A LA DERECHA</span></div>
+        </div>
+        <div class='tree-pay'>
+            <div>Diario: $70</div>
+            <div>Mensual: $2,100-$3,000</div>
+            <div style='border-top:1px solid rgba(255,255,255,0.2); padding-top:4px; margin-top:4px;'>Anual: $25,000-$36,000</div>
+        </div>
+    </div>
+    <div class='tree-graphic'>
+        <div class='tree-top' style='color:#EFC96A; font-weight:900; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;'>DIRECTOR 4★</div>
+        <div class='tree-split'>
+            <div class='tree-node'><div class='tree-icon'><img src="data/3048124.png"></div><span>125 SOCIOS<br>A LA IZQUIERDA</span></div>
+            <div class='tree-node'><div class='tree-icon'><img src="data/9092388.png"></div><span>125 SOCIOS<br>A LA DERECHA</span></div>
+        </div>
+        <div class='tree-pay'>
+            <div>Diario: $100</div>
+            <div>Mensual: $3,100-$4,000</div>
+            <div style='border-top:1px solid rgba(255,255,255,0.2); padding-top:4px; margin-top:4px;'>Anual: $36,000-$48,000</div>
+        </div>
+    </div>
+</div>
+`},
+{type:"cover",bg:"data/TAL-turquoise-blue-tropical-water-WHYTURQ0323-741b0f8d4d8849f38f10a96ebef6c8d5.jpg",title:"TRAVORIUM",subtitle:"<div class='gold-divider'><div class='line'></div><div class='diamond'></div><div class='line'></div></div><span class='outlined-text' style='font-size:30px; font-weight: 800; display:block; margin-bottom: 30px;'>¡Póngase en contacto con la persona que lo invitó y descubra cómo convertirse en socio de nuestra compañía!<br>¡Y le enseñaremos todas las estrategias necesarias para su éxito!</span><div class='gold-badge' style='margin: 0 auto;'>UNA COMPAÑÍA PARA UNA VIDA MEJOR</div>", outlined: true, darkenClass: 'bottom-dark-70'},
+{type:"cover",bg:"data/shutterstock_444622738.jpg",title:"TRAVORIUM",subtitle:"<div class='gold-divider'><div class='line'></div><div class='diamond'></div><div class='line'></div></div><span class='outlined-text' style='font-size:36px; font-weight: 800; display:block; margin-bottom: 30px;'>Viaja más. Viaja mejor.</span><div class='gold-badge' style='margin: 0 auto;'>¡GRACIAS POR SU ATENCIÓN!</div>", outlined: true, darkenClass: 'bottom-dark-70'}
+];
+const track=document.getElementById("track");
+function renderCover(d){let badge_top=d.badge_top?`<div class="cover-badge top ${d.plainBadge?'plain':''}" style="margin-top: 24px; margin-bottom: 0;">${d.badge_top}</div>`:'';let badge=d.badge?`<div class="cover-badge">${d.badge}</div>`:'';return`<div class="slide-bg" style="background-image:url('${d.bg}')"></div><div class="slide-bg-overlay ${d.fullDark?'full-dark':(d.darkenClass?d.darkenClass:'bottom-dark')}"></div><div class="slide-grid"></div><img src="data/logo.png" class="brand-logo" onerror="this.style.display='none'"><div class="slide-inner" style="justify-content: center; align-items: center;"><div class="cover-panel"><h1 class="cover-title ${d.outlined?'outlined':''}">${d.title}</h1>${badge_top}<p class="cover-subtitle">${d.subtitle}</p>${badge}</div></div>`}
+function renderCompany(d){let m=d.metrics.map(x=>`<div class="metric"><div class="metric-value">${x.v}</div><div class="metric-label">${x.l}</div></div>`).join("");let o=d.offices.map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td></tr>`).join("");return`<div class="slide-bg" style="background-image:url('${d.bg}')"></div><div class="slide-bg-overlay left-dark"></div><div class="slide-grid"></div><img src="data/logo.png" class="brand-logo" onerror="this.style.display='none'"><div class="slide-inner"><div class="company-card"><div><div class="eyebrow">${d.eyebrow}</div><h1 class="title">${d.title}</h1><div class="metrics">${m}</div><table class="office-table">${o}</table><p class="company-desc">${d.desc}</p></div><div class="founder-card"><img src="${d.ceo.img}" alt="${d.ceo.name}"><div class="founder-caption"><strong>${d.ceo.name}</strong><span>${d.ceo.role}</span></div></div></div></div>`}
+function renderBenefits(d){let c=d.cards.map(x=>`<div class="benefit-card"><div class="benefit-top"><div class="benefit-icon">${x.icon}</div><div class="benefit-header"><div class="benefit-label">${x.label}</div><div class="mini-divider"><div class="line"></div><div class="diamond"></div><div class="line"></div></div></div></div><p>${x.text}</p></div>`).join("");let divider = `<div class="gold-divider" style="margin: 0 0 24px 0; width: 100%;"><div class="line"></div><div class="diamond"></div><div class="line"></div></div>`;return`<div class="slide-bg" style="background-image:url('${d.bg}')"></div><div class="slide-grid"></div><img src="data/logo.png" class="brand-logo" onerror="this.style.display='none'"><div class="slide-inner"><div class="benefits-layout"><div class="benefits-hero"><div class="benefits-hero-content"><div class="eyebrow">${d.eyebrow}</div><div style="display:inline-block;"><h1>${d.title}</h1>${divider}</div><p>${d.heroText}</p></div></div><div class="benefit-grid">${c}</div></div></div>`}
+function renderServices(d){
+    let items=d.items.map(x=>`<div class="nsvc-card"><div class="nsvc-circle"><img src="${x.img}"></div><div class="nsvc-label"><span>${x.name}</span></div></div>`).join("");
+    return`<div class="slide-bg" style="background-image:url('${d.bg}')"></div><div class="slide-bg-overlay cover ${d.darkenClass||'darken-30'}"></div><div class="slide-grid"></div><img src="data/logo.png" class="brand-logo" onerror="this.style.display='none'"><div class="slide-inner"><div class="nsvc-wrap" style="transform: translateY(-10px);">
+    <h1 class="nsvc-title">${d.title}</h1>
+    <div class="nsvc-panel"><div class="nsvc-grid">${items}</div></div>
+    </div></div></div>`}
+function renderPricing(d){
+    const t = GLOBAL_TEXTS[curLang];
+    let plans=d.plans.map(p=>{
+        let feats=p.feats.map(f=>`<li class="price-feat">${f}</li>`).join("");
+        let badge=p.badge?`<div class="price-popular-badge">${p.badge}</div>`:'';
+        return`<div class="price-card${p.badge?" popular":""}">${badge}<div class="price-name">${p.name}</div><div class="price-value">${p.price}</div><div class="price-freq">${t.once}</div><div class="price-monthly">${t.monthly} ${p.monthly}</div><ul class="price-feats">${feats}</ul><div class="price-points">${p.points}</div></div>`
+    }).join("");
+    return`<div class="slide-bg" style="background-image:url('${d.bg}')"></div><div class="slide-bg-overlay cover darken-20"></div><div class="slide-grid"></div>${L}<div class="slide-inner"><div class="pricing-wrap"><div class="eyebrow">${d.eyebrow}</div><h1 class="title">${d.title}</h1><div class="sub">${d.sub}</div><div class="price-grid">${plans}</div></div></div>`
+}
+function renderPartnership(d){
+    let feats=d.feats.map(f=>`<div class="partner-feat"><div class="partner-feat-icon">${f.icon}</div><span>${f.text}</span></div>`).join("");
+    return `<div class="slide-bg" style="background-image:url('${d.bg}')"></div><div class="slide-bg-overlay cover"></div><div class="slide-bg-overlay left-dark"></div><div class="slide-grid"></div>${L}
+    <div class="slide-inner">
+        <div class="partner-layout">
+            <div class="partner-info">
+                <div class="eyebrow" style="color:#5bc0eb;">${d.eyebrow}</div>
+                <h1 class="title">${d.title}</h1>
+                <div class="partner-desc">${d.desc}</div>
+                <div class="gold-divider" style="margin: 0 0 24px 0; width: 100%;"><div class="line"></div><div class="diamond"></div><div class="line"></div></div>
+                <div class="partner-feats">${feats}</div>
+                <div class="partner-cta" style="background:#5bc0eb; color:#000; box-shadow: 0 10px 20px rgba(91,192,235,0.3);">
+                    <span style="font-size:16px; margin-right:8px;">💎</span>${d.price_val || '$99.95 ЕЖЕГОДНО'}
+                </div>
+            </div>
+            <div class="partner-visual" style="background-image:url('${d.visual}')"></div>
+        </div>
+    </div>`;
+}
+
+const L='<img src="data/logo.png" class="brand-logo" style="opacity:.28;filter:brightness(0) saturate(100%) invert(19%) sepia(89%) saturate(2100%) hue-rotate(190deg) brightness(88%) contrast(91%)" onerror="this.style.display=\'none\'">';
+function renderGeneric(d){let c=d.cards?d.cards.map(x=>`<div class="gen-card"><strong>${x.t}</strong><p>${x.d}</p></div>`).join(""):"";let h=d.highlight?`<div class="gen-highlight">${d.highlight}</div>`:"";let darkenClass=d.darken?`darken-${d.darken}`:"cover";return`<div class="slide-bg" style="background-image:url('${d.bg}')"></div><div class="slide-bg-overlay ${darkenClass}"></div><div class="slide-grid"></div>${L}<div class="slide-inner"><div class="gen-wrap"><h1 class="title">${d.title}</h1><div class="eyebrow" style="margin-top: 15px;">${d.eyebrow}</div><p class="gen-body">${d.body}</p>${h}${c?`<div class="gen-cards">${c}</div>`:""}</div></div>`}
+
+
+
+function renderDest(d){
+    let cards=d.dests.map(x=>`<div class="dest-card"><div class="dest-card-img" style="background-image:url('${x.img}')"></div><div class="dest-card-body"><h3>${x.name}</h3><div class="dest-detail">${x.detail}</div><div class="gold-divider" style="margin: 0 0 10px 0; width: 100%;"><div class="line"></div><div class="diamond"></div><div class="line"></div></div><div class="dest-prices"><span class="dest-retail">${x.retail}</span><span class="dest-our">${x.our}</span></div></div></div>`).join("");
+    return `<div class="slide-bg" style="background-image:url('${d.bg}')"></div><div class="slide-bg-overlay cover darken-30"></div><div class="slide-grid"></div>${L}<div class="slide-inner"><div class="dest-wrap"><div class="eyebrow">${d.eyebrow}</div><h1 class="title" style="color: white; font-size: 64px; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 10px 30px rgba(0,0,0,0.8);">${d.title}</h1><p class="sub" style="color: #5bc0eb; font-size: 40px; font-weight: 900; text-transform: uppercase; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 8px 24px rgba(0,0,0,0.6);">${d.sub}</p><div class="dest-grid" style="margin-top: 40px;">${cards}</div></div></div>`}
+function renderCompTable(d) {
+    const t = GLOBAL_TEXTS[curLang];
+    const headers = d.headers || (curLang==='ru' ? ["ПЛАТИНОВЫЙ ПАКЕТ", "ЛПП", "ЛЕВАЯ СТОРОНА", "ПРАВАЯ СТОРОНА", "ЕЖЕДНЕВНО", "ЕЖЕМЕСЯЧНО", "БОНУС", "ЕЖЕГОДНО"] : 
+                   curLang==='es' ? ["PAQUETE PLATINO", "SPP", "LADO IZQUIERDO", "LADO DERECHO", "DIARIO", "MENSUAL", "BONO", "ANUAL"] :
+                   ["PLATINUM PACKAGE", "PEP", "LEFT SIDE", "RIGHT SIDE", "DAILY", "MONTHLY", "BONUS", "ANNUALLY"]);
+    const headerHtml = headers.map((h, i) => `<div class="comp-col-${i+1}">${h}</div>`).join("");
+    
+    const rowsHtml = (d.ranks || []).map(r => `
+        <div class="comp-strip ${r.highlight ? 'highlight' : ''}">
+            <div class="comp-col-1">${r.name}</div>
+            <div class="comp-col-2">${r.lpp}</div>
+            <div class="comp-col-3">${r.left}</div>
+            <div class="comp-col-4">${r.right}</div>
+            <div class="comp-col-5" style="font-weight:900;">${r.daily}</div>
+            <div class="comp-col-6" style="color:var(--blue); font-weight:900;">${r.monthly}</div>
+            <div class="comp-col-7" style="font-weight:900;">${r.bonus}</div>
+            <div class="comp-col-8" style="color:#d9534f; font-weight:900;">${r.annual}</div>
+        </div>
+    `).join("");
+
+    return `
+    <div class="slide-bg" style="background-image:url('${d.bg}')"></div>
+    <div class="slide-bg-overlay darken-50"></div>
+    <div class="slide-grid"></div>${L}
+    <div class="slide-inner" style="padding: 30px 60px 10px 60px; display: flex; flex-direction: column; justify-content: center; align-items: center; transform: translateY(-10px);">
+        <div style="width:100%; max-width:1300px; margin-bottom:10px; text-align:left;">
+            <div class="eyebrow">${d.eyebrow || 'КОМПЕНСАЦИОННЫЙ ПЛАН'}</div>
+            <h1 style="color:white; font-size:${d.titleSize||'48px'}; font-weight:900; margin:0; line-height:1.1; letter-spacing:1px; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 10px 30px rgba(0,0,0,0.8);">${d.title}</h1>
+        </div>
+        
+        <div class="comp-strip-container" style="width:100%; max-width:1300px; margin-top: 20px;">
+            <div class="comp-strip header">${headerHtml}</div>
+            ${rowsHtml}
+        </div>
+        
+        <div style="width:100%; max-width:1300px; margin-top:15px; text-align:center;">
+            <p style="color:white; font-size:14px; font-weight:700; font-style:italic; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 4px 8px rgba(0,0,0,0.8); letter-spacing:0.5px;">${d.sub}</p>
+        </div>
+    </div>`;
+}
+function renderCta(d){return`<div class="slide-bg" style="background-image:url('${d.bg}')"></div><div class="slide-bg-overlay cover"></div><div class="slide-grid"></div><img src="data/logo.png" class="brand-logo" onerror="this.style.display='none'"><div class="slide-inner"><div class="cta-panel"><h1 class="${d.outlined?'outlined':''}">${d.title}</h1><p>${d.body}</p><div class="cover-badge">${d.badge}</div></div></div>`}
+function renderReferral(d){
+    let iconsHtml = d.icons.map(i => `<div class="referral-icon-item"><div class="referral-icon-circle">${i.icon}</div><div>${i.text}</div></div>`).join("");
+    return `<div class="slide-bg" style="background-image:url('${d.bg}')"></div><div class="slide-bg-overlay cover"></div><div class="slide-bg-overlay left-dark"></div><div class="slide-grid"></div>${L}<div class="slide-inner"><div class="referral-layout"><div class="eyebrow">${d.eyebrow}</div><h1 class="title">${d.title}</h1><div class="gold-divider" style="margin: 0 0 20px 0; width: 100%; max-width: 580px;"><div class="line"></div><div class="diamond"></div><div class="line"></div></div><div class="referral-subtitle">${d.subtitle}</div><div class="referral-icons">${iconsHtml}</div><div class="referral-banner"><div class="referral-banner-icon">⭐</div><div class="referral-banner-text">${d.bannerText}</div></div></div></div>`;
+}
+function renderDreamcation(d){
+    let m = d.metrics.map(x => `<div class="dreamcation-metric"><div class="dreamcation-metric-value">${x.v}</div><div class="dreamcation-metric-label">${x.l}</div></div>`).join("");
+    return `<div class="slide-bg" style="background-image:url('${d.bg}')"></div><div class="slide-bg-overlay cover darken-20"></div><div class="slide-grid"></div>${L}<div class="slide-inner"><div class="dreamcation-layout"><h1 class="title">${d.title}</h1><div class="dreamcation-subtitle">${d.subtitle}</div><div class="dreamcation-metrics">${m}</div></div></div>`;
+}
+function renderTravelSite(d){
+    let cards = d.cards.map(x => `
+        <div class="ts-card">
+            <div class="ts-card-header">
+                <div class="ts-card-icon" style="background: none; box-shadow: none;">${x.icon}</div>
+                <span>${x.t.toUpperCase()}</span>
+            </div>
+            <div class="ts-card-img" style="background-image:url('${x.img}')"></div>
+            <div class="ts-card-footer">${x.d}</div>
+        </div>
+    `).join("");
+    return`<div class="slide-bg" style="background-image:url('${d.bg}')"></div><div class="slide-bg-overlay cover ${d.darkenClass||'darken-40'}"></div><div class="slide-grid"></div><img src="data/logo.png" class="brand-logo" onerror="this.style.display='none'"><div class="slide-inner ${d.customClass||''}"><div class="dest-wrap" style="max-width:1400px; margin:0 auto;">
+            <h1 class="title" style="color: white; font-size: clamp(40px, 4.5vw, 80px); text-shadow: 2.5px 2.5px 0 #000, -2.5px -2.5px 0 #000, 2.5px -2.5px 0 #000, -2.5px 2.5px 0 #000, 0 10px 30px rgba(0,0,0,0.8);">${d.title}</h1>
+
+            <p style="color: white; font-size: 26px; font-weight: 800; margin-top: 10px; line-height: 1.4; text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 0 4px 12px rgba(0,0,0,0.8);">${d.subtitle || d.body || ''}</p>
+            <div class="ts-grid" style="margin-top: 20px; transform: translateY(-10px);">${cards}</div>
+        </div>
+    </div>`;
+}
+function renderComparison(d){
+    const t = GLOBAL_TEXTS[curLang];
+    const showFeatures = d.showFeatures !== false;
+    const images = d.images || [
+        {src: "data/exeprice.jpg", price: "$5,047.56", label: t.total, isTrav: false},
+        {src: "data/travprice.jpg", price: "$1,923.92", label: t.total, isTrav: true}
+    ];
+    const cardsHtml = images.map(img => `
+        <div class="comp-card-v ${img.isTrav ? 'trav' : ''}" style="flex: 1; height: 100%; min-height: 0;">
+            <div class="comp-card-v-img-wrap" style="flex: 1; overflow-y: auto;"><img src="${img.src}" class="comp-card-v-img"></div>
+            <div class="comp-card-v-footer"><span>${img.label}</span><span>${img.price}</span></div>
+        </div>
+    `).join("");
+    const midColumn = showFeatures ? `
+        <div class="comp-mid-column" style="gap: 20px; justify-content: space-between; align-items: center; justify-self: center; display: flex; flex-direction: column; height: 100%;">
+            ${(d.features||[]).map(f => `
+                <div class="comp-feature" style="height: calc(33% - 14px);">
+                    <div class="comp-feature-icon">${f.icon}</div>
+                    <div class="comp-feature-text"><strong>${f.title}</strong><span>${f.desc}</span></div>
+                </div>
+            `).join("")}
+        </div>
+    ` : "";
+    const layoutStyle = showFeatures ? "grid-template-columns: 1.2fr 1fr 1.2fr;" : "grid-template-columns: 1.2fr 3fr;";
+    return `<div class="slide-bg" style="background-image:url('${d.bg}')"></div><div class="slide-bg-overlay cover darken-30"></div><div class="comp-grad-overlay"></div><div class="slide-grid"></div>${L}
+    <div class="slide-inner ${d.customClass||''}" style="padding: 20px 60px; height: 100%; box-sizing: border-box; display: flex; align-items: stretch; justify-content: center;">
+        <div class="comp-slide-layout" style="${layoutStyle} align-items: stretch; height: 100%; width: 100%; overflow: hidden;">
+            <div class="comp-sidebar" style="justify-content: center; display: flex; flex-direction: column; height: 100%;">
+                ${d.eyebrow !== "" ? `<div class="eyebrow">${d.eyebrow}</div>` : ""}
+                <h1 class="title">${d.title}</h1>
+                <div class="gold-divider" style="margin: 10px 0 20px 0; width: 100%;"><div class="line"></div><div class="diamond"></div><div class="line"></div></div>
+                <p>${d.body}</p>
+            </div>
+            ${midColumn}
+            <div class="comp-visuals" style="justify-content: ${showFeatures ? 'flex-end' : 'space-around'}; flex: 1; display: flex; gap: 20px; align-items: stretch; height: 100%; min-height: 0;">
+                ${cardsHtml}
+            </div>
+        </div>
+    </div>`;
+}
+function renderIndustry(d){
+    let menuHtml = d.menu.map(m => `<div style="text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 2px 2px 4px rgba(0,0,0,0.5);">${m}</div>`).join("");
+    let bulletsHtml = d.bullets.map(b => `
+        <div style="display:flex; gap:15px; align-items:flex-start; margin-bottom:20px;">
+            <div style="width:12px; height:12px; background:#EFC96A; flex-shrink:0; margin-top:8px; box-shadow: 0 0 5px rgba(0,0,0,0.5);"></div>
+            <div style="color:white; font-size:22px; font-weight:800; line-height:1.3; text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 2px 2px 4px rgba(0,0,0,0.8);">${b}</div>
+        </div>
+    `).join("");
+    return `<div class="slide-bg" style="background-image:url('${d.bg}')"></div><div class="slide-bg-overlay industry-dark"></div><div class="slide-grid"></div>${L}
+    <div class="slide-inner" style="padding: 40px 80px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <div style="position:absolute; top:60px; left:80px; width:450px;">
+            <div style="color:white; font-style:italic; font-size:20px; font-weight:600; line-height:1.4; text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 0 4px 10px rgba(0,0,0,0.8);">${d.quote}</div>
+            <div style="color:#EFC96A; font-weight:900; font-size:22px; margin-top:10px; text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 0 4px 10px rgba(0,0,0,0.8);">${d.author}</div>
+        </div>
+        <div style="position:absolute; top:60px; right:80px; display:flex; gap:15px; align-items:stretch;">
+            <div style="text-align:right; color:white; font-weight:900; font-size:24px; letter-spacing:2px; line-height:1.2;">${menuHtml}</div>
+            <div style="width:4px; background:#EFC96A; box-shadow:0 0 10px rgba(239,201,106,0.5);"></div>
+        </div>
+        <div style="display:grid; grid-template-columns: 1fr 1.2fr; gap:60px; width:100%; max-width:1200px; align-items:center; transform: translateY(40px);">
+            <div style="border: 2.5px solid #EFC96A; border-radius:30px; overflow:hidden; aspect-ratio:1/1; box-shadow:0 30px 60px rgba(0,0,0,0.6); position:relative; width:380px; height:380px; justify-self: end;">
+                <img src="${d.visual}" style="width:100%; height:100%; object-fit:cover;">
+                <div style="position:absolute; inset:0; box-shadow:inset 0 0 40px rgba(239,201,106,0.3);"></div>
+            </div>
+            <div style="display:flex; flex-direction:column; justify-content:center; margin:0; padding:0;">
+                <h1 style="color:#5bc0eb; font-size:66px; font-weight:900; margin:0 0 10px 0; padding:0; line-height:1; letter-spacing:2px; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 10px 20px rgba(0,0,0,0.8);">${d.title}</h1>
+                <div class="gold-divider" style="margin: 0 0 40px 0; width: 350px;"><div class="line"></div><div class="diamond"></div><div class="line"></div></div>
+                ${bulletsHtml}
+            </div>
+        </div>
+    </div>`;
+}
+function renderBusinessModel(d){
+    let rows = d.comparison.map(r => `
+        <div class="bm-row" style="background:${r.active?'rgba(0,0,0,0.7)':'rgba(255,255,255,0.95)'}; border:${r.active?'2px solid #EFC96A':'1px solid rgba(0,0,0,0.1)'}; border-radius:100px; padding:10px 40px; display:grid; grid-template-columns: 1.5fr auto 1.5fr auto 1fr; align-items:center; gap:20px; width:100%; box-shadow:0 10px 30px rgba(0,0,0,0.4); margin-bottom:15px;">
+            <div style="color:${r.active?'#5bc0eb':'#222'}; font-weight:900; font-size:22px; text-transform:uppercase; text-shadow:${r.active?'1px 1px 0 #000':'none'};">${r.left}</div>
+            <div style="color:${r.active?'#5bc0eb':'#444'}; font-size:24px; font-weight:900;">→</div>
+            <div style="color:${r.active?'white':'#444'}; font-weight:800; font-size:22px; text-align:center; text-shadow:${r.active?'1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000':'none'};">${r.center}</div>
+            <div style="color:${r.active?'#5bc0eb':'#444'}; font-size:24px; font-weight:900;">→</div>
+            <div style="color:${r.active?'white':'#222'}; font-weight:800; font-size:22px; text-align:right; text-shadow:${r.active?'1px 1px 0 #000':'none'};">${r.right}</div>
+        </div>
+    `).join("");
+    let cards = d.features.map(f => `
+        <div class="bm-card">
+            <div style="width:50px; height:50px; border-radius:50%; background:white; border:2px solid #1479d4; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; box-shadow:0 5px 10px rgba(20,121,212,0.1);">${f.icon}</div>
+            <div>
+                <div style="font-family:'Montserrat',sans-serif; font-weight:900; font-size:16px; color:#07182d; margin-bottom:6px; letter-spacing:0.05em; text-transform:uppercase;">${f.title}</div>
+                <div style="font-size:18px; font-weight:700; color:#35455d; line-height:1.4;">${f.desc}</div>
+            </div>
+        </div>
+    `).join("");
+    return `<div class="slide-bg" style="background-image:url('${d.bg}')"></div><div class="slide-bg-overlay darken-50"></div><div class="slide-grid"></div>${L}
+    <div class="slide-inner" style="display:flex; flex-direction:column; justify-content:center; align-items:center; padding: 40px 80px;">
+        <div style="width:100%; max-width:1150px; text-align:left; margin-bottom:30px;">
+            <div class="eyebrow">${d.eyebrow}</div>
+            <h1 style="color:white; font-size:56px; font-weight:900; margin:0; line-height:1; letter-spacing:2px; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 10px 30px rgba(0,0,0,0.8);">${d.title}</h1>
+        </div>
+        <div style="width:100%; max-width:1150px; margin-bottom:25px;">
+            ${rows}
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px; width:100%; max-width:1150px;">
+            ${cards}
+        </div>
+    </div>`;
+}
+const renderers={
+    cover:renderCover,
+    company:renderCompany,
+    benefits:renderBenefits,
+    services:renderServices,
+    pricing:renderPricing,
+    partnership:renderPartnership,
+    generic:renderGeneric,
+    dest:renderDest,
+    comptable:renderCompTable,
+    cta:renderCta,
+    referral:renderReferral,
+    dreamcation:renderDreamcation,
+    travelsite:renderTravelSite,
+    comparison:renderComparison,
+    industry:renderIndustry,
+    businessmodel:renderBusinessModel,
+    blank: (d) => `<div class="slide-bg" style="background:${d.bg}"></div>`
+};
+let cur = 0;
+const total = 25;
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const counter = document.getElementById("counter");
+
+function go() {
+    const currentSlides = document.querySelectorAll(".slide");
+    currentSlides.forEach((s, i) => { s.classList.toggle("active", i === cur) });
+    if (counter) counter.textContent = (cur + 1).toString().padStart(2, "0") + " / " + total.toString().padStart(2, "0");
+    if (prevBtn) prevBtn.disabled = cur === 0;
+    if (nextBtn) nextBtn.disabled = cur === currentSlides.length - 1;
+}
+
+if (prevBtn) prevBtn.onclick = () => { if (cur > 0) { cur--; go() } };
+if (nextBtn) nextBtn.onclick = () => { if (cur < total - 1) { cur++; go() } };
+document.onkeydown = e => {
+    if (e.key === "ArrowLeft" && cur > 0) { cur--; go() }
+    else if (e.key === "ArrowRight" && cur < total - 1) { cur++; go() }
+};
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.onclick = () => {
+        const lang = btn.getAttribute('data-lang');
+        if (lang === curLang) return;
+        
+        curLang = lang;
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b === btn));
+        document.documentElement.lang = lang;
+        
+        renderAll();
+    };
+});
+
+function renderAll() {
+    const data = curLang === 'ru' ? SLIDES_RU : (curLang === 'en' ? SLIDES_EN : SLIDES_ES);
+    track.innerHTML = '';
+    data.forEach((s, i) => {
+        const el = document.createElement("div");
+        el.className = "slide " + (s.type || "") + (i === cur ? " active" : "");
+        el.innerHTML = (renderers[s.type] || renderers.cover)(s);
+        track.appendChild(el);
+    });
+    go();
+}
+
+// Initial render
+renderAll();
+</script>
+</body>
+</html>
